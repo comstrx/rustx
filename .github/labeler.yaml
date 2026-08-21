@@ -8,7 +8,6 @@ workflow:
 automation:
   - changed-files:
       - any-glob-to-any-file:
-          - '.github/*.yml'
           - '.github/*.yaml'
           - '.github/CODEOWNERS'
           - '.github/PULL_REQUEST_TEMPLATE.md'

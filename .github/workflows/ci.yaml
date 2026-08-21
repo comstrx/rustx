@@ -20,7 +20,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-stable, runner: '${{ matrix.os }}' }
 
   nightly:
@@ -28,7 +28,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: nightly, command: ci-nightly, runner: '${{ matrix.os }}' }
 
   msrv:
@@ -36,7 +36,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: msrv, command: ci-msrv, runner: '${{ matrix.os }}' }
 
   hack:
@@ -44,50 +44,50 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-hack, runner: '${{ matrix.os }}' }
 
   doc:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-doc }
 
   panic:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: nightly, command: ci-panic }
 
   fmt:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: nightly, command: ci-fmt }
 
   lint:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-lint }
 
   clippy:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-clippy }
 
   audit:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-audit }
 
   vet:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-vet }
 
   udeps:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-udeps }
 
   semver:
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-semver }
 
   coverage:
     secrets: inherit
     needs: [stable, nightly, msrv, hack, doc, panic, fmt, lint, clippy, audit, vet, udeps, semver]
 
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-coverage }
 
   publish:
@@ -95,5 +95,5 @@ jobs:
     needs: [coverage]
     if: github.event_name == 'push' && vars.PUBLISH_ENABLED == 'true'
 
-    uses: ./.github/workflows/_base.yml
+    uses: ./.github/workflows/_base.yaml
     with: { profile: stable, command: ci-publish }

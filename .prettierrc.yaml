@@ -20,7 +20,7 @@ singleAttributePerLine: false
 embeddedLanguageFormatting: auto
 
 overrides:
-  - files: ['*.yml', '*.yaml']
+  - files: ['*.yaml', '*.yml']
     options:
       tabWidth: 2
 
