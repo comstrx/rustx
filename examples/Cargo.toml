@@ -1,0 +1,19 @@
+[package]
+name = "examples"
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+license.workspace = true
+description.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+
+[dependencies]
+typing.workspace = true
+
+[[example]]
+name = "typing"
+path = "typing.rs"

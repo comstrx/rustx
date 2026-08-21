@@ -1,0 +1,44 @@
+comment: false
+
+codecov:
+  require_ci_to_pass: true
+
+github_checks:
+  annotations: true
+
+ignore:
+  - '**/node_modules/**'
+  - '**/__pycache__/**'
+  - '**/.git/**'
+  - '**/target/**'
+  - '**/dist/**'
+  - '**/build/**'
+  - '**/vendor/**'
+  - '**/coverage/**'
+  - '**/out/**'
+  - '**/venv/**'
+  - '**/.venv/**'
+  - '**/.idea/**'
+  - '**/.cache/**'
+  - '**/.turbo/**'
+  - '**/.vscode/**'
+  - '**/.next/**'
+  - '**/.nuxt/**'
+
+coverage:
+  precision: 2
+  round: down
+  range: '70..95'
+
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 1%
+        informational: false
+
+    patch:
+      default:
+        target: 90%
+        threshold: 1%
+        informational: false

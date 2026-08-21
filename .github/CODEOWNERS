@@ -1,0 +1,18 @@
+*                       @comstrx
+
+/.github/               @comstrx
+/bloats/                @comstrx
+/benches/               @comstrx
+/examples/              @comstrx
+/tests/                 @comstrx
+/fuzz/                  @comstrx
+/supply-chain/          @comstrx
+/scripts/               @comstrx
+
+/Cargo.toml             @comstrx
+/*.toml                 @comstrx
+
+/docs/                  @comstrx
+/*.md                   @comstrx
+
+/crates/                @comstrx

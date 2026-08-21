@@ -1,0 +1,16 @@
+[package]
+name = "rustx-typing"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+description = "Purpose-built types and type utilities for the RustX workspace."
+categories = ["rust-patterns"]
+keywords = ["rust", "types", "newtype", "validation", "toolx"]
+
+[lints]
+workspace = true

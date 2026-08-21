@@ -1,0 +1,29 @@
+edition = "2021"
+style_edition = "2024"
+
+max_width = 120
+tab_spaces = 4
+hard_tabs = false
+
+newline_style = "Unix"
+use_small_heuristics = "Max"
+
+reorder_imports = true
+reorder_modules = true
+
+use_field_init_shorthand = true
+use_try_shorthand = true
+
+remove_nested_parens = true
+merge_derives = true
+force_explicit_abi = true
+match_block_trailing_comma = true
+
+unstable_features = true
+imports_granularity = "Crate"
+group_imports = "StdExternalCrate"
+
+format_code_in_doc_comments = true
+normalize_doc_attributes = true
+format_macro_bodies = true
+format_macro_matchers = true

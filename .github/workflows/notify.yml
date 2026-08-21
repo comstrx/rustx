@@ -1,0 +1,44 @@
+name: Notify
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['CI', 'Fuzz', 'Sanitizer', 'Miri']
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notify-${{ github.event.workflow_run.id }}
+  cancel-in-progress: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Send Notification
+        env:
+          STATUS: ${{ github.event.workflow_run.conclusion }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+          REPOSITORY: ${{ github.event.workflow_run.repository.full_name }}
+          SERVER_URL: ${{ github.server_url }}
+
+          REF: ${{ github.event.workflow_run.head_branch }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+          URL: ${{ github.event.workflow_run.html_url }}
+
+          STARTED_AT: ${{ github.event.workflow_run.run_started_at || github.event.workflow_run.created_at }}
+          FINISHED_AT: ${{ github.event.workflow_run.updated_at || github.event.workflow_run.created_at }}
+
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+
+        run: bash ./scripts/run.sh notify

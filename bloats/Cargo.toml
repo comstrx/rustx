@@ -1,0 +1,28 @@
+[package]
+name = "bloats"
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+readme.workspace = true
+license.workspace = true
+description.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+
+[features]
+bloat-rustx = ["dep:rustx"]
+bloat-typing = ["dep:typing"]
+
+[dependencies]
+rustx = { workspace = true, optional = true }
+typing = { workspace = true, optional = true }
+
+[[bin]]
+name = "bloat-rustx"
+path = "rustx.rs"
+
+[[bin]]
+name = "bloat-typing"
+path = "typing.rs"

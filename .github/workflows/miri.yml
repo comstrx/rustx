@@ -1,0 +1,15 @@
+name: Miri
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'
+
+concurrency:
+  group: miri-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  miri:
+    uses: ./.github/workflows/_base.yml
+    with: { profile: nightly, command: ci-miri }

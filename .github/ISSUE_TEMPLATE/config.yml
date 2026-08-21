@@ -1,0 +1,18 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: '💬 Discussions'
+    url: 'https://github.com/comstrx/rustx/discussions'
+    about: 'Questions, ideas, RFCs, and general discussion.'
+
+  - name: '✨ Ideas'
+    url: 'https://github.com/comstrx/rustx/discussions/categories/ideas'
+    about: 'Propose features and enhancements before opening an issue.'
+
+  - name: '🤝 Support'
+    url: 'https://github.com/comstrx/rustx/blob/main/SUPPORT.md'
+    about: 'Support channels and how to get help.'
+
+  - name: '📚 Documentation'
+    url: 'https://github.com/comstrx/rustx/blob/main/README.md'
+    about: 'Project documentation and getting started.'

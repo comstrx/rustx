@@ -1,0 +1,117 @@
+
+# cargo-vet config file
+
+[cargo-vet]
+version = "0.10"
+
+[imports.bytecode-alliance]
+url = "https://raw.githubusercontent.com/bytecodealliance/wasmtime/main/supply-chain/audits.toml"
+
+[imports.google]
+url = "https://raw.githubusercontent.com/google/supply-chain/main/audits.toml"
+
+[imports.isrg]
+url = "https://raw.githubusercontent.com/divviup/libprio-rs/main/supply-chain/audits.toml"
+
+[imports.mozilla]
+url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
+
+[[exemptions.aho-corasick]]
+version = "1.1.4"
+criteria = "safe-to-run"
+
+[[exemptions.anstyle]]
+version = "1.0.13"
+criteria = "safe-to-run"
+
+[[exemptions.autocfg]]
+version = "1.5.0"
+criteria = "safe-to-run"
+
+[[exemptions.clap]]
+version = "4.5.54"
+criteria = "safe-to-run"
+
+[[exemptions.clap_builder]]
+version = "4.5.54"
+criteria = "safe-to-run"
+
+[[exemptions.clap_lex]]
+version = "0.7.7"
+criteria = "safe-to-run"
+
+[[exemptions.criterion]]
+version = "0.8.1"
+criteria = "safe-to-run"
+
+[[exemptions.crunchy]]
+version = "0.2.4"
+criteria = "safe-to-run"
+
+[[exemptions.half]]
+version = "2.7.1"
+criteria = "safe-to-run"
+
+[[exemptions.itoa]]
+version = "1.0.17"
+criteria = "safe-to-run"
+
+[[exemptions.memchr]]
+version = "2.7.6"
+criteria = "safe-to-run"
+
+[[exemptions.quote]]
+version = "1.0.44"
+criteria = "safe-to-run"
+
+[[exemptions.regex]]
+version = "1.12.2"
+criteria = "safe-to-run"
+
+[[exemptions.regex-syntax]]
+version = "0.8.8"
+criteria = "safe-to-run"
+
+[[exemptions.serde_json]]
+version = "1.0.149"
+criteria = "safe-to-run"
+
+[[exemptions.syn]]
+version = "2.0.114"
+criteria = "safe-to-run"
+
+[[exemptions.unicode-ident]]
+version = "1.0.22"
+criteria = "safe-to-run"
+
+[[exemptions.walkdir]]
+version = "2.5.0"
+criteria = "safe-to-run"
+
+[[exemptions.winapi-i686-pc-windows-gnu]]
+version = "0.4.0"
+criteria = "safe-to-run"
+
+[[exemptions.winapi-util]]
+version = "0.1.11"
+criteria = "safe-to-run"
+
+[[exemptions.winapi-x86_64-pc-windows-gnu]]
+version = "0.4.0"
+criteria = "safe-to-run"
+
+[[exemptions.windows-link]]
+version = "0.2.1"
+criteria = "safe-to-run"
+
+[[exemptions.windows-sys]]
+version = "0.61.2"
+criteria = "safe-to-run"
+
+[[exemptions.zerocopy]]
+version = "0.8.33"
+criteria = "safe-to-run"
+
+[[exemptions.zerocopy-derive]]
+version = "0.8.33"
+criteria = "safe-to-run"

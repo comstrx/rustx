@@ -1,0 +1,56 @@
+debug: false
+quiet: false
+insecure: false
+timeout: 10m0s
+
+db:
+  no-progress: true
+
+pkg:
+  include-dev-deps: true
+
+image:
+  image-config-scanners:
+    - misconfig
+    - secret
+
+severity:
+  - HIGH
+  - CRITICAL
+
+vulnerability:
+  ignore-status: []
+  ignore-unfixed: true
+  skip-vex-repo-update: false
+  severity-source:
+    - auto
+
+scan:
+  disable-telemetry: true
+  skip-version-check: true
+  parallel: 10
+
+  scanners:
+    - vuln
+    - secret
+    - misconfig
+    - license
+
+  skip-dirs:
+    - .git
+    - .vscode
+    - .idea
+    - node_modules
+    - dist
+    - build
+    - target
+    - vendor
+    - __pycache__
+    - .pytest_cache
+    - .mypy_cache
+    - .ruff_cache
+    - .cache
+    - .nyc_output
+    - .next
+    - .nuxt
+    - .turbo

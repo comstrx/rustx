@@ -1,0 +1,44 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
+
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+
+    labels:
+      - ci
+
+    commit-message:
+      prefix: 'deps(ci)'
+
+    groups:
+      actions:
+        patterns:
+          - '*'
+
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '03:00'
+
+    open-pull-requests-limit: 10
+    rebase-strategy: auto
+
+    labels:
+      - cargo
+
+    commit-message:
+      prefix: 'deps(cargo)'
+
+    groups:
+      rust-deps:
+        patterns:
+          - '*'

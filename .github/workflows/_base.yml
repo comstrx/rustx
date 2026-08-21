@@ -1,0 +1,74 @@
+name: Base
+
+on:
+  workflow_call:
+    inputs:
+      runner:
+        required: false
+        type: string
+        default: ubuntu-latest
+
+      command:
+        required: true
+        type: string
+
+      profile:
+        required: false
+        type: string
+        default: stable
+
+      toolchain:
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: '-Dwarnings'
+  RUST_BACKTRACE: '1'
+  RUST_STABLE: stable
+  RUST_MSRV: '1.98.0'
+  RUST_NIGHTLY: nightly-2026-08-20
+
+jobs:
+  run:
+    runs-on: ${{ inputs.runner }}
+
+    steps:
+      - id: resolve
+        run: |
+          tc="${{ inputs.toolchain }}"
+
+          if [[ -z "${tc}" ]]; then
+              case "${{ inputs.profile }}" in
+                  stable)  tc="${RUST_STABLE}"  ;;
+                  msrv)    tc="${RUST_MSRV}"    ;;
+                  nightly) tc="${RUST_NIGHTLY}" ;;
+                  *) echo "base: invalid profile '${{ inputs.profile }}'" >&2; exit 2 ;;
+              esac
+          fi
+
+          echo "toolchain=${tc}" >> "${GITHUB_OUTPUT}"
+
+      - uses: actions/checkout@v6
+
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: ${{ steps.resolve.outputs.toolchain }}
+
+      - uses: cargo-bins/cargo-binstall@main
+
+      - name: Running bash ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+
+        run: bash ./scripts/run.sh ${{ inputs.command }}

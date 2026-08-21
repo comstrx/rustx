@@ -1,0 +1,74 @@
+include = ["**/*.toml"]
+exclude = [
+    "**/.git/**",
+    "**/.idea/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/target/**",
+    "**/vendor/**",
+    "**/venv/**",
+    "**/.venv/**",
+    "**/.cache/**",
+    "**/.turbo/**",
+    "**/.vscode/**",
+    "**/.next/**",
+    "**/.nuxt/**",
+    "**/*.lock",
+    "**/__pycache__/**",
+]
+
+[formatting]
+indent_string = "    "
+column_width = 100
+trailing_newline = true
+align_comments = false
+allowed_blank_lines = 1
+crlf = false
+
+[[rule]]
+include = ["**/Cargo.toml"]
+keys = ["package"]
+formatting.reorder_keys = false
+
+[[rule]]
+include = ["**/Cargo.toml"]
+keys = ["workspace", "workspace.members", "workspace.exclude"]
+formatting.reorder_keys = false
+
+[[rule]]
+include = ["**/Cargo.toml"]
+keys = ["workspace.package.*"]
+formatting.reorder_keys = false
+
+[[rule]]
+include = ["**/Cargo.toml"]
+keys = ["features"]
+formatting.column_width = 100
+formatting.reorder_keys = false
+
+[[rule]]
+include = ["**/Cargo.toml"]
+keys = [
+    "dependencies",
+    "*-dependencies",
+    "workspace.dependencies",
+    "workspace.*-dependencies",
+    "target.*.dependencies",
+    "target.*.*-dependencies",
+]
+formatting.column_width = 100
+formatting.reorder_keys = true
+
+[[rule]]
+include = ["**/Cargo.toml"]
+keys = [
+    "dependencies.*",
+    "*-dependencies.*",
+    "workspace.dependencies.*",
+    "workspace.*-dependencies.*",
+    "target.*.dependencies.*",
+    "target.*.*-dependencies.*",
+]
+formatting.column_width = 100
+formatting.reorder_keys = true

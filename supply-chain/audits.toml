@@ -1,0 +1,58 @@
+
+# cargo-vet audits file
+
+[audits]
+
+[[trusted.cc]]
+criteria = "safe-to-deploy"
+trusted-publisher = "github:rust-lang/cc-rs"
+start = "2025-09-01"
+end = "2027-01-23"
+
+[[trusted.dtolnay]]
+criteria = "safe-to-deploy"
+user-id = 3618
+start = "2019-03-11"
+end = "2027-01-23"
+
+[[trusted.find-msvc-tools]]
+criteria = "safe-to-deploy"
+user-id = 539
+start = "2025-08-29"
+end = "2027-01-23"
+
+[[trusted.find-msvc-tools]]
+criteria = "safe-to-deploy"
+trusted-publisher = "github:rust-lang/cc-rs"
+start = "2025-09-05"
+end = "2027-01-23"
+
+[[trusted.getrandom]]
+criteria = "safe-to-deploy"
+user-id = 39279
+start = "2020-09-10"
+end = "2027-01-23"
+
+[[trusted.jobserver]]
+criteria = "safe-to-deploy"
+user-id = 55123 # rust-lang-owner
+start = "2024-07-23"
+end = "2027-01-23"
+
+[[trusted.libc]]
+criteria = "safe-to-deploy"
+user-id = 55123 # rust-lang-owner
+start = "2024-08-15"
+end = "2027-01-23"
+
+[[trusted.libfuzzer-sys]]
+criteria = "safe-to-deploy"
+user-id = 696
+start = "2020-01-14"
+end = "2027-01-23"
+
+[[trusted.r-efi]]
+criteria = "safe-to-deploy"
+user-id = 12177
+start = "2019-03-01"
+end = "2027-01-23"

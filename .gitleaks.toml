@@ -1,0 +1,59 @@
+title = "Gitleaks Configurations"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Ignore generated/build artifacts"
+paths = [
+    '''(^|/)\.git/''',
+    '''(^|/)\.vscode/''',
+    '''(^|/)\.idea/''',
+    '''(^|/)\.next/''',
+    '''(^|/)\.nuxt/''',
+    '''(^|/)\.turbo/''',
+    '''(^|/)\.cache/''',
+    '''(^|/)node_modules/''',
+    '''(^|/)dist/''',
+    '''(^|/)build/''',
+    '''(^|/)target/''',
+    '''(^|/)vendor/''',
+    '''(^|/)venv/''',
+    '''(^|/)\.venv/''',
+    '''(^|/)__pycache__/''',
+    '''(^|/)\.pytest_cache/''',
+    '''(^|/)\.mypy_cache/''',
+    '''(^|/)\.ruff_cache/''',
+    '''(^|/)\.nyc_output/''',
+    '''(?i)\.(?:zip|tar|tgz|gz|7z|rar|jar|war)$''',
+    '''(?i)\.(?:png|jpe?g|gif|webp|bmp|ico|pdf|exe|dll|so|dylib|bin|woff2?|ttf|eot)$''',
+]
+
+[[allowlists]]
+description = "Ignore obvious placeholders"
+regexTarget = "secret"
+regexes = [
+    '''(?i)\b(?:fake|dummy|example|sample|test|placeholder|redacted)\b''',
+    '''(?i)\b(?:xxxx+|yyyy+|zzzz+|0000+|1111+)\b''',
+    '''(?i)\b(?:your[-_ ]?(?:api[-_ ]?)?key|your[-_ ]?token|insert[-_ ]?here)\b''',
+]
+stopwords = [
+    "REPLACE_ME",
+    "CHANGE_ME",
+    "CHANGEME",
+    "TODO",
+    "API_KEY",
+    "SECRET_KEY",
+    "API_TOKEN",
+    "ACCESS_TOKEN",
+    "YOUR_TOKEN",
+    "YOUR_PASSWORD",
+    "EXAMPLE",
+    "SAMPLE",
+    "DUMMY",
+    "EXAMPLE_VALUE",
+    "SAMPLE_VALUE",
+    "DUMMY_VALUE",
+    "TEST_VALUE",
+    "NOT_A_SECRET",
+]
