@@ -1,23 +1,20 @@
-# ✨ Rustx
+# ✨ RustX
 
 <div align="center">
-  <h1>Rustx</h1>
-  <p>
-    <strong>A production-grade Rust workspace for reusable ToolX crates.</strong>
-  </p>
-  <p>
-
-<!-- prettier-ignore-start -->
-
-[![CI](https://github.com/comstrx/rustx/actions/workflows/ci.yml/badge.svg)](https://github.com/comstrx/rustx/actions/workflows/ci.yml)
-![Version](https://img.shields.io/badge/version-v0.1.0-blue.svg)
-![MSRV](https://img.shields.io/badge/rustc-1.98+-ab6000.svg)
-![License](https://img.shields.io/badge/license-AGPL--3.0--only-blue.svg)
-
-<!-- prettier-ignore-end -->
-
-  </p>
+  <br/>
+  <br/>
+  <img height="280" src="https://github.com/user-attachments/assets/d1c18d6c-9f61-4782-80c1-6d7eda2dc0ad" />
+  <br/>
+  <br/>
 </div>
+
+[![License: AGPL-3.0](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](./LICENSE)
+[![Rust 1.98+](https://img.shields.io/badge/rust-1.98%2B-orange.svg)](https://www.rust-lang.org)
+[![edition 2024](https://img.shields.io/badge/edition-2024-green.svg)](https://doc.rust-lang.org/edition-guide/)
+[![CI](https://github.com/comstrx/rustx/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/comstrx/rustx/actions/workflows/ci.yaml)
+[![Release](https://img.shields.io/github/v/release/comstrx/rustx?sort=semver)](https://github.com/comstrx/rustx/releases/latest)
+
+`rustx` is a rust workspace for building high-performance framework foundations, developer tooling, and infrastructure runtimes.
 
 ## Overview
 

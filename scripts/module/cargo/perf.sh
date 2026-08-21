@@ -288,12 +288,10 @@ cmd_coverage () {
         fi
         if [[ ! -x "${bin}" ]]; then
 
-            local url_a="https://cli.codecov.io/${dist}/${resolved}/codecov"
-            local url_b="https://cli.codecov.io/${resolved}/${dist}/codecov"
-            local sha_a="https://cli.codecov.io/${dist}/${resolved}/codecov.SHA256SUM"
-            local sha_b="https://cli.codecov.io/${resolved}/${dist}/codecov.SHA256SUM"
-            local sig_a="https://cli.codecov.io/${dist}/${resolved}/codecov.SHA256SUM.sig"
-            local sig_b="https://cli.codecov.io/${resolved}/${dist}/codecov.SHA256SUM.sig"
+            local base_url="https://cli.codecov.io/${resolved}/${dist}"
+            local binary_url="${base_url}/codecov"
+            local checksum_url="${base_url}/codecov.SHA256SUM"
+            local signature_url="${base_url}/codecov.SHA256SUM.sig"
 
             local tmp_dir="$(mktemp -d "${cache_dir}/codecov.tmp.XXXXXX" 2>/dev/null || true)"
 
@@ -310,21 +308,15 @@ cmd_coverage () {
 
             rm -f -- "${tmp_bin}" "${tmp_sha}" "${tmp_sig}" 2>/dev/null || true
 
-            if ! run curl -fsSL -o "${tmp_bin}" "${url_a}"; then
-                run curl -fsSL -o "${tmp_bin}" "${url_b}"
-            fi
-            if ! run curl -fsSL -o "${tmp_sha}" "${sha_a}"; then
-                run curl -fsSL -o "${tmp_sha}" "${sha_b}"
-            fi
-            if ! curl -fsSL -o "${tmp_sig}" "${sig_a}" 2>/dev/null; then
-                curl -fsSL -o "${tmp_sig}" "${sig_b}" 2>/dev/null || rm -f -- "${tmp_sig}" 2>/dev/null || true
-            fi
+            run curl -fsSL -o "${tmp_bin}" "${binary_url}"
+            run curl -fsSL -o "${tmp_sha}" "${checksum_url}"
+            curl -fsSL -o "${tmp_sig}" "${signature_url}" 2>/dev/null || rm -f -- "${tmp_sig}" 2>/dev/null || true
             if [[ -f "${tmp_sig}" ]] && has gpg; then
 
                 local keyring="${tmp_dir}/trustedkeys.gpg"
                 local keyfile="${tmp_dir}/codecov.pgp.asc"
 
-                run curl -fsSL -o "${keyfile}" "https://keybase.io/codecovsecurity/pgp_keys.asc"
+                run curl -fsSL -o "${keyfile}" "https://keybase.io/codecovsecops/pgp_keys.asc"
                 gpg --no-default-keyring --keyring "${keyring}" --import "${keyfile}" >/dev/null 2>&1 || true
                 gpg --no-default-keyring --keyring "${keyring}" --verify "${tmp_sig}" "${tmp_sha}" >/dev/null 2>&1 || die "Codecov: SHA256SUM signature verification failed." 2
 
