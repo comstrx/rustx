@@ -13,16 +13,21 @@ authors.workspace = true
 
 [features]
 bloat-rustx = ["dep:rustx"]
-bloat-typing = ["dep:typing"]
+bloat-base = ["dep:rustx-base"]
 
 [dependencies]
 rustx = { workspace = true, optional = true }
-typing = { workspace = true, optional = true }
+rustx-base = { workspace = true, optional = true }
 
 [[bin]]
 name = "bloat-rustx"
 path = "rustx.rs"
+required-features = ["bloat-rustx"]
 
 [[bin]]
-name = "bloat-typing"
-path = "typing.rs"
+name = "bloat-base"
+path = "base.rs"
+required-features = ["bloat-base"]
+
+[lints]
+workspace = true

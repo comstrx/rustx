@@ -7,7 +7,9 @@ BOOT_LOADED=1
 __dir__="${BASH_SOURCE[0]%/*}"
 [[ "${__dir__}" == "${BASH_SOURCE[0]}" ]] && __dir__="."
 
-readonly BASE_DIR="$(cd -- "${__dir__}" && pwd -P)/.."
+BASE_DIR="$(cd -- "${__dir__}" && pwd -P)/.."
+
+readonly BASE_DIR
 readonly CORE_DIR="${BASE_DIR}/core"
 readonly MODULE_DIR="${BASE_DIR}/module"
 

@@ -19,21 +19,12 @@ pkg_hash_clear () {
     hash -r 2>/dev/null || true
 
 }
-pkg_path_prepend () {
-
-    local d="${1-}"
-    [[ -n "${d}" && -d "${d}" ]] || return 0
-
-    case ":${PATH-}:" in
-        *":${d}:"*) ;;
-        *) PATH="${d}:${PATH-}" ;;
-    esac
-
-    export PATH
-    return 0
-
-}
 pkg_with_sudo () {
+
+    if [[ "$(os_name)" == "windows" ]]; then
+        "$@"
+        return $?
+    fi
 
     local uid="${EUID:-}"
     [[ -n "${uid}" ]] || uid="$(id -u 2>/dev/null || printf '%s' 1)"
@@ -42,10 +33,6 @@ pkg_with_sudo () {
         "$@"
         return $?
     fi
-
-    case "$(os_name)" in
-        windows) "$@"; return $? ;;
-    esac
 
     local non_interactive=0
 
@@ -79,9 +66,11 @@ pkg_with_sudo () {
 pkg_apt_update_once () {
 
     (( ${PKG_APT_UPDATED:-0} )) && return 0
-    PKG_APT_UPDATED=1
 
-    pkg_with_sudo apt-get update >/dev/null 2>&1 || pkg_with_sudo apt-get update
+    pkg_with_sudo apt-get update >/dev/null 2>&1 || pkg_with_sudo apt-get update || return $?
+
+    PKG_APT_UPDATED=1
+    return 0
 
 }
 pkg_linux_mgr () {
@@ -179,13 +168,16 @@ pkg_win_install () {
 }
 pkg_map_one () {
 
-    local os="$(os_name)"
-    local want="${1:-}"
+    local os="" want="${1:-}"
     [[ -n "${want}" ]] || { printf '%s' ""; return 0; }
+
+    os="$(os_name)"
 
     case "${os}" in
         linux)
-            local mgr="$(pkg_linux_mgr 2>/dev/null || true)"
+            local mgr=""
+            mgr="$(pkg_linux_mgr 2>/dev/null || true)"
+
             case "${want}" in
                 python|python3|python3.*) printf '%s' "python3" ; return 0 ;;
                 pip|pip3)
@@ -282,11 +274,11 @@ pkg_map_one () {
 }
 pkg_map_list () {
 
-    local -n out_pkgs="${1}"
+    local -n __pkg_out_pkgs="${1}"
     shift || true
 
     local want="" p=""
-    out_pkgs=()
+    __pkg_out_pkgs=()
 
     for want in "$@"; do
 
@@ -295,7 +287,7 @@ pkg_map_list () {
         p="$(pkg_map_one "${want}")"
         [[ -n "${p}" ]] || continue
 
-        out_pkgs+=( "${p}" )
+        __pkg_out_pkgs+=( "${p}" )
 
     done
 
@@ -304,18 +296,18 @@ pkg_map_list () {
 }
 pkg_uniq_list () {
 
-    local -n out_uniq="${1}"
+    local -n __pkg_out_uniq="${1}"
     shift || true
 
     local x="" y="" found=0
-    out_uniq=()
+    __pkg_out_uniq=()
 
     for x in "$@"; do
 
         [[ -n "${x}" ]] || continue
         found=0
 
-        for y in "${out_uniq[@]-}"; do
+        for y in "${__pkg_out_uniq[@]-}"; do
 
             if [[ "${y}" == "${x}" ]]; then
                 found=1
@@ -325,7 +317,7 @@ pkg_uniq_list () {
         done
 
         (( found )) && continue
-        out_uniq+=( "${x}" )
+        __pkg_out_uniq+=( "${x}" )
 
     done
 
@@ -343,17 +335,22 @@ pkg_mac_link_cmd () {
     local bin_dir="${HOME}/.local/bin"
     local link_path="${bin_dir}/${name}"
 
-    local alt_path="$(command -v -- "${alt}" 2>/dev/null || true)"
+    local alt_path=""
+    alt_path="$(command -v -- "${alt}" 2>/dev/null || true)"
     [[ -n "${alt_path}" ]] || return 0
 
     if [[ -L "${link_path}" ]]; then
-        local cur="$(readlink "${link_path}" 2>/dev/null || true)"
+
+        local cur=""
+        cur="$(readlink "${link_path}" 2>/dev/null || true)"
+
         [[ "${cur}" == "${alt_path}" ]] && return 0
+
     fi
 
-    run mkdir -p -- "${bin_dir}" 2>/dev/null || true
-    run rm -f -- "${link_path}" 2>/dev/null || true
-    run ln -s -- "${alt_path}" "${link_path}" 2>/dev/null || true
+    run mkdir -p -- "${bin_dir}" || die "pkg: cannot create shim dir: ${bin_dir}" 2
+    run rm -f -- "${link_path}" || die "pkg: cannot replace shim: ${link_path}" 2
+    run ln -s -- "${alt_path}" "${link_path}" || die "pkg: cannot link ${alt_path} -> ${link_path}" 2
 
     return 0
 
@@ -365,8 +362,9 @@ pkg_mac_gnu_shim () {
 
     local bin_dir="${HOME}/.local/bin" need_llvm=0 w=""
 
-    run mkdir -p -- "${bin_dir}" 2>/dev/null || true
-    pkg_path_prepend "${bin_dir}"
+    run mkdir -p -- "${bin_dir}" || die "pkg: cannot create shim dir: ${bin_dir}" 2
+
+    path_prepend "${bin_dir}"
 
     for w in "${wants[@]}"; do
         case "${w}" in
@@ -376,8 +374,12 @@ pkg_mac_gnu_shim () {
 
     if (( need_llvm )) && pkg_has_cmd brew; then
         if brew list --versions llvm >/dev/null 2>&1; then
-            local llvm_prefix="$(brew --prefix llvm 2>/dev/null || true)"
-            [[ -n "${llvm_prefix}" && -d "${llvm_prefix}/bin" ]] && pkg_path_prepend "${llvm_prefix}/bin"
+
+            local llvm_prefix=""
+            llvm_prefix="$(brew --prefix llvm 2>/dev/null || true)"
+
+            [[ -n "${llvm_prefix}" && -d "${llvm_prefix}/bin" ]] && path_prepend "${llvm_prefix}/bin"
+
         fi
     fi
 
@@ -425,8 +427,10 @@ pkg_want_is_pkg_only () {
 }
 pkg_verify_wants () {
 
-    local os="$(os_name)" w="" p=""
+    local os="" w="" p=""
     local -a wants=( "$@" )
+
+    os="$(os_name)"
 
     for w in "${wants[@]}"; do
 
@@ -454,7 +458,7 @@ pkg_verify_wants () {
             case "${w}" in
                 awk|sed|grep|find|xargs|head|tail|sort|wc|chmod|mkdir|date|stat|readlink|realpath)
                     p="$(command -v -- "${w}" 2>/dev/null || true)"
-                    [[ "${p}" == "${HOME}/.local/bin/${w}" ]] || die "pkg: command '${w}' is not GNU-shimmed (expected ${HOME}/.local/bin/${w})" 2
+                    [[ "${p}" == "${HOME}/.local/bin/${w}" ]] || die "pkg: '${w}' resolves to '${p:-<none>}', not the GNU shim ${HOME}/.local/bin/${w} (brew install the GNU build, then re-run)" 2
                 ;;
             esac
 
@@ -467,11 +471,13 @@ pkg_verify_wants () {
 }
 pkg_collect_missing_wants () {
 
-    local -n out_missing="${1}"
+    local -n __pkg_out_missing="${1}"
     shift || true
 
-    local os="$(os_name)" w=""
-    out_missing=()
+    local os="" w=""
+    __pkg_out_missing=()
+
+    os="$(os_name)"
 
     for w in "$@"; do
 
@@ -480,8 +486,8 @@ pkg_collect_missing_wants () {
 
         if [[ "${w}" == "python" ]]; then
 
-            if [[ "${os}" == "windows" ]]; then pkg_has_cmd python || out_missing+=( "python" )
-            else pkg_has_cmd python3 || out_missing+=( "python3" )
+            if [[ "${os}" == "windows" ]]; then pkg_has_cmd python || __pkg_out_missing+=( "python" )
+            else pkg_has_cmd python3 || __pkg_out_missing+=( "python3" )
             fi
 
             continue
@@ -489,12 +495,12 @@ pkg_collect_missing_wants () {
         fi
         if [[ "${w}" == "pip" || "${w}" == "pip3" ]]; then
 
-            pkg_has_cmd pip || pkg_has_cmd pip3 || out_missing+=( "pip" )
+            pkg_has_cmd pip || pkg_has_cmd pip3 || __pkg_out_missing+=( "pip" )
             continue
 
         fi
 
-        pkg_has_cmd "${w}" || out_missing+=( "${w}" )
+        pkg_has_cmd "${w}" || __pkg_out_missing+=( "${w}" )
 
     done
 
@@ -504,7 +510,9 @@ pkg_collect_missing_wants () {
 pkg_install_linux () {
 
     local -a pkgs=( "$@" )
-    local mgr="$(pkg_linux_mgr)" || true
+    local mgr=""
+
+    mgr="$(pkg_linux_mgr)" || true
 
     (( ${#pkgs[@]} )) || die "pkg_install_linux: missing package name(s)" 2
     [[ -n "${mgr}" ]] || die "Linux: no supported package manager found (apt/dnf/yum/pacman/zypper/apk)." 2
@@ -559,10 +567,12 @@ pkg_is_installed () {
 }
 ensure_pkg () {
 
-    local yes=0 quiet=0 verbose=0 p="" os="$(os_name)"
+    local yes=0 quiet=0 verbose=0 p="" os=""
 
     local -a pkgs=() uniq_pkgs=()
     local -a wants=()
+
+    os="$(os_name)"
 
     source <(parse "$@" -- --yes:bool --quiet:bool --verbose:bool :wants:list)
 

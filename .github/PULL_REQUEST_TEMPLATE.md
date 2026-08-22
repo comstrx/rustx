@@ -1,25 +1,22 @@
 ## ✨ Summary
 
-- Added automatic PR labeling based on changed paths
-  (tests/benches/examples/docs/ci/cargo/security/release/tooling/fuzz/crates/\*).
-- Added label sync workflow to keep repo labels consistent from a single `.github/labels.yaml`
-  source of truth.
-- Added a polished PR template to standardize reviews and reduce review latency.
+<!-- What changes, and why. One or two lines — link the issue instead of retelling it. -->
+
+-
 
 ## 🏷️ Type
 
 - [ ] triage
 - [ ] bug
 - [ ] enhancement
-- [ ] refactor
-- [ ] chore
 - [ ] security
-- [ ] performance
-- [ ] contract
 
 ## 🧭 Scope
 
+<!-- Mirrors `.github/labels.yml`. Tick only what this PR actually touches. -->
+
 - [ ] workflow
+- [ ] ci
 - [ ] automation
 - [ ] docs
 - [ ] security
@@ -35,20 +32,27 @@
 - [ ] supply-chain
 
 - [ ] crates
-- [ ] crates:\*\*\*
+- [ ] crates:rustx
+- [ ] crates:base
 
-## 💥 Notes / Links
+## 🧪 Verification
 
-- Goal: "single source of truth" for repo hygiene (labels + automation) to match the philosophy.
-- Expected impact:
-  - Faster triage (labels applied automatically).
-  - Cleaner label taxonomy (auto-sync from `.github/labels.yaml`).
-  - Consistent PR quality (template-driven).
+<!-- Commands you actually ran locally, not the ones you intended to. -->
 
-## 🧾 Overview
+- [ ] `bash ./scripts/run.sh ci-fmt`
+- [ ] `bash ./scripts/run.sh ci-clippy`
+- [ ] `bash ./scripts/run.sh ci-stable`
+- [ ] Other: <!-- ci-msrv / ci-miri / ci-sanitizer / bench numbers … -->
 
-This PR upgrades repo hygiene and review flow:
+## 💥 Impact
 
-- PRs get auto-labeled based on changed paths.
-- Labels are synced from a single `.github/labels.yaml` source of truth.
-- A clean PR template standardizes what reviewers need to see.
+- Breaking change: <!-- no — or yes, plus the migration a caller must perform -->
+- Public API / semver: <!-- unchanged — or what moved, and why it is allowed -->
+- MSRV: <!-- unchanged — or the new floor -->
+- Rollback: <!-- revert this PR — or the extra steps required -->
+
+## 🔗 Links
+
+<!-- Closes #000. RFCs, benchmarks, upstream issues. -->
+
+-

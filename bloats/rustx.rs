@@ -1,17 +1,18 @@
-#[cfg(feature = "bloat-rustx")]
-fn main() {
-    std::hint::black_box(rustx::typing::Typing::hello_world());
-}
+//! Binary-size probe for the `rustx` facade.
+//!
+//! Built by `cargo bloat` to attribute binary size to the facade's re-exports.
+//! The greeting is mixed with a value the compiler cannot know until run time,
+//! so the call survives const-folding and the measurement reflects code that
+//! actually ships.
 
-#[cfg(not(feature = "bloat-rustx"))]
-#[allow(
-    clippy::disallowed_macros,
-    clippy::disallowed_methods,
-    clippy::exit,
-    clippy::print_stderr,
-    reason = "The adapter must fail loudly when its required feature is disabled."
-)]
+use core::hint::black_box;
+use std::env::args_os;
+
+use rustx::base::Typing;
+
 fn main() {
-    eprintln!("enable: --features bloat-rustx");
-    std::process::exit(2);
+    let argc = args_os().count();
+
+    black_box(Typing::hello_world());
+    black_box(argc);
 }

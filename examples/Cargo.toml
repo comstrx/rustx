@@ -12,8 +12,11 @@ homepage.workspace = true
 authors.workspace = true
 
 [dependencies]
-typing.workspace = true
+rustx-base.workspace = true
 
 [[example]]
-name = "typing"
-path = "typing.rs"
+name = "base"
+path = "base.rs"
+
+[lints]
+workspace = true

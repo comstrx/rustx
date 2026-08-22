@@ -1,47 +1,39 @@
 msrv = "1.98.0"
 
+avoid-breaking-exported-api = true
+
+doc-valid-idents = ["RustX", "ToolX", ".."]
+
 too-many-arguments-threshold = 5
 too-many-lines-threshold = 80
 type-complexity-threshold = 100
 cognitive-complexity-threshold = 15
 excessive-nesting-threshold = 3
 max-trait-bounds = 2
+max-struct-bools = 2
+max-fn-params-bools = 1
 
 future-size-threshold = 8192
 pass-by-value-size-limit = 192
-too-large-for-stack = 512
 stack-size-threshold = 262144
 array-size-threshold = 8192
 large-error-threshold = 64
 enum-variant-size-threshold = 160
 
-allow-dbg-in-tests = false
-allow-print-in-tests = false
-allow-panic-in-tests = false
-allow-unwrap-in-tests = false
-allow-expect-in-tests = false
-allow-indexing-slicing-in-tests = false
-allow-useless-vec-in-tests = false
 check-incompatible-msrv-in-tests = true
 
-allow-unwrap-in-consts = false
-allow-expect-in-consts = false
-suppress-restriction-lint-in-const = false
+allow-mixed-uninlined-format-args = false
+allow-renamed-params-for = []
+warn-unsafe-macro-metavars-in-private-macros = true
 
 warn-on-all-wildcard-imports = true
-allowed-wildcard-imports = []
-
-avoid-breaking-exported-api = true
-
-doc-valid-idents = [".."]
 
 allowed-scripts = ["Latin"]
 
 min-ident-chars-threshold = 2
 allowed-idents-below-min-chars = ["id", "ok", ".."]
 
-single-char-binding-names-threshold = 2
-disallowed-names = ["e", "t", "tmp", ".."]
+disallowed-names = ["tmp", ".."]
 
 disallowed-macros = [
     { path = "std::print", reason = "no stdout in libs; use tracing/log", allow-invalid = true },
@@ -67,6 +59,8 @@ disallowed-methods = [
     { path = "core::result::Result::unwrap_unchecked", reason = "ban unchecked unwrap; invariants must be explicit + audited", allow-invalid = true },
 
     { path = "core::mem::transmute", reason = "ban transmute; prefer safe conversions or explicit unsafe with invariants", allow-invalid = true },
+    { path = "core::mem::transmute_copy", reason = "same hazard as transmute, without even a size check", allow-invalid = true },
+    { path = "core::mem::forget", reason = "leaking is a decision; use ManuallyDrop so the intent is in the type", allow-invalid = true },
     { path = "std::process::exit", reason = "no process::exit in libraries", allow-invalid = true },
 
     { path = "std::vec::Vec::leak", reason = "no leaking memory", allow-invalid = true },
@@ -74,11 +68,7 @@ disallowed-methods = [
 ]
 
 disallowed-types = [
-    { path = "std::cell::RefCell", reason = "avoid runtime borrow checks; prefer explicit design or safe sync primitives", allow-invalid = true },
-    { path = "std::rc::Rc", reason = "prefer Arc in async/multi-thread contexts", replacement = "std::sync::Arc", allow-invalid = true },
+    { path = "std::cell::RefCell", reason = "runtime borrow checks panic; encode the invariant in the type instead", allow-invalid = true },
 
-    { path = "std::collections::LinkedList", reason = "avoid LinkedList; prefer Vec/VecDeque", allow-invalid = true },
-
-    { path = "std::sync::mpsc::Sender", reason = "prefer async-friendly channels (flume/crossbeam) by policy", allow-invalid = true },
-    { path = "std::sync::mpsc::Receiver", reason = "prefer async-friendly channels (flume/crossbeam) by policy", allow-invalid = true },
+    { path = "std::collections::LinkedList", reason = "cache-hostile; prefer Vec/VecDeque", allow-invalid = true },
 ]

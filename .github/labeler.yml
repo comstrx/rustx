@@ -1,0 +1,115 @@
+# Basics
+
+workflow:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**'
+
+automation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/*.yml'
+          - '.github/CODEOWNERS'
+          - '.github/PULL_REQUEST_TEMPLATE.md'
+          - '.github/ISSUE_TEMPLATE/**'
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**'
+          - '**/docs/**'
+          - 'README.md'
+          - '**/README.md'
+          - 'CONTRIBUTING.md'
+          - '**/CONTRIBUTING.md'
+          - 'CODE_OF_CONDUCT.md'
+          - '**/CODE_OF_CONDUCT.md'
+          - 'SUPPORT.md'
+          - '**/SUPPORT.md'
+          - '**/*.md'
+
+security:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'SECURITY.md'
+
+cargo:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'Cargo.toml'
+          - 'Cargo.lock'
+          - '**/Cargo.toml'
+          - '**/Cargo.lock'
+
+tooling:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'scripts/**'
+          - '.editorconfig'
+          - '.gitattributes'
+          - '.taplo.toml'
+          - '.rustfmt.toml'
+          - '.clippy.toml'
+          - '.deny.toml'
+          - '.typos.toml'
+          - '.gitleaks.toml'
+          - '.trivy.yml'
+          - '.syft.yml'
+          - '.codecov.yml'
+          - '.prettierrc.yml'
+          - '.gitignore'
+
+# Base Crates
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tests/**'
+          - '**/tests/**'
+
+benches:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'benches/**'
+          - '**/benches/**'
+
+examples:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'examples/**'
+          - '**/examples/**'
+
+bloats:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'bloats/**'
+          - '**/bloats/**'
+
+fuzz:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'fuzz/**'
+          - '**/fuzz/**'
+
+supply-chain:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'supply-chain/**'
+          - '**/supply-chain/**'
+
+crates:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'crates/**'
+
+# Custom Crates
+
+crates:rustx:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'crates/rustx/**'
+
+crates:base:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'crates/base/**'

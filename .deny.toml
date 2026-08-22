@@ -8,21 +8,17 @@ targets = [
     "aarch64-apple-darwin",
 ]
 all-features = true
-exclude = []
 
 [advisories]
 yanked = "deny"
-unmaintained = "workspace"
-maximum-db-staleness = "P30D"
-ignore = []
+unmaintained = "all"
+maximum-db-staleness = "P7D"
 
 [bans]
 multiple-versions = "deny"
+workspace-default-features = "deny"
 wildcards = "deny"
 highlight = "all"
-
-allow = []
-skip = []
 
 deny = [
     { crate = "openssl", use-instead = "rustls" },
@@ -42,29 +38,14 @@ executables = "deny"
 unknown-registry = "deny"
 unknown-git = "deny"
 allow-registry = ["https://github.com/rust-lang/crates.io-index"]
-allow-git = []
 required-git-spec = "rev"
 unused-allowed-source = "deny"
 
 [licenses]
-include-dev = false
-unused-allowed-license = "allow"
-confidence-threshold = 0.95
-allow = [
-    "AGPL-3.0-only",
-    "Apache-2.0",
-    "MIT",
-    "BSD-2-Clause",
-    "NCSA",
-    "Unicode-3.0",
-    "BSD-3-Clause",
-    "ISC",
-    "Zlib",
-    "0BSD",
-    "CC0-1.0",
-    "Unicode-DFS-2016",
-    "OpenSSL",
-]
+include-dev = true
+unused-allowed-license = "deny"
+confidence-threshold = 1.0
+allow = ["Apache-2.0", "MIT", "BSD-2-Clause", "Unicode-3.0"]
 
 [licenses.private]
 ignore = true

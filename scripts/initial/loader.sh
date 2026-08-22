@@ -10,8 +10,6 @@ __dir__="$(cd -- "${__dir__}" && pwd -P)"
 source "${__dir__}/boot.sh"
 source "${__dir__}/help.sh"
 
-SORTED_LIST=(cinema notify git github crate lint perf safety doctor meta ci)
-
 should_skip () {
 
     local name="${1-}" s=""
@@ -75,8 +73,8 @@ load_walk () {
             doc)
                 should_skip "${name}" && continue
 
-                [[ -n "${_seen[${name}]-}" ]] && continue
-                _seen["${name}"]=1
+                [[ -n "${_seen[${file}]-}" ]] && continue
+                _seen["${file}"]=1
 
                 _mods+=( "${name}" )
             ;;
@@ -140,94 +138,6 @@ load_source () {
     load_walk source "${dir}" "" "" "${extra_skip[@]-}"
 
 }
-module_usage () {
-
-    local name="${1-}"
-    [[ -n "${name}" ]] || return 0
-
-    local mod="" chosen=""
-    mod="${name//-/_}"
-    mod="${mod//./_}"
-
-    local fn1="${mod}_usage"
-    local fn2="help_${mod}"
-    local fn3="${mod}_help"
-    local fn4="usage_${mod}"
-    local fn5="cmd_${mod}_usage"
-    local fn6="cmd_help_${mod}"
-    local fn7="cmd_${mod}_help"
-    local fn8="cmd_usage_${mod}"
-
-    declare -F "${fn1}" >/dev/null 2>&1 && chosen="${fn1}"
-    [[ -z "${chosen}" ]] && declare -F "${fn2}" >/dev/null 2>&1 && chosen="${fn2}"
-    [[ -z "${chosen}" ]] && declare -F "${fn3}" >/dev/null 2>&1 && chosen="${fn3}"
-    [[ -z "${chosen}" ]] && declare -F "${fn4}" >/dev/null 2>&1 && chosen="${fn4}"
-    [[ -z "${chosen}" ]] && declare -F "${fn5}" >/dev/null 2>&1 && chosen="${fn5}"
-    [[ -z "${chosen}" ]] && declare -F "${fn6}" >/dev/null 2>&1 && chosen="${fn6}"
-    [[ -z "${chosen}" ]] && declare -F "${fn7}" >/dev/null 2>&1 && chosen="${fn7}"
-    [[ -z "${chosen}" ]] && declare -F "${fn8}" >/dev/null 2>&1 && chosen="${fn8}"
-    [[ -n "${chosen}" ]] || return 0
-
-    "${chosen}" || true
-
-}
-render_doc () {
-
-    local dir="${MODULE_DIR:-}"
-    [[ -n "${dir}" ]] || { die "render_doc: MODULE_DIR not set" 2; return 2; }
-
-    local -a mods=()
-    local -A seen=()
-    local -A printed_mod=()
-    local name="" mod="" chosen="" want="" printed=0
-
-    load_source "${dir}" || return $?
-    load_walk doc "${dir}" seen mods || return 2
-
-    info_ln "Usage:\n"
-    printf '%s\n' \
-        "    rustx [--yes] [--quiet] [--verbose] <cmd> [args...]" \
-        ''
-
-    info_ln "Global:\n"
-    printf '%s\n' \
-        '    --yes,    -y     Non-interactive (assume yes)' \
-        '    --quiet,  -q     Less output' \
-        '    --verbose,-v     Print executed commands' \
-        ''
-
-    for want in "${SORTED_LIST[@]-}"; do
-
-        [[ -n "${want}" ]] || continue
-
-        for name in "${mods[@]-}"; do
-
-            [[ "${name}" == "${want}" ]] || continue
-
-            module_usage "${name}"
-
-            printed=1
-            printed_mod["${name}"]=1
-            break
-
-        done
-
-    done
-    for name in "${mods[@]-}"; do
-
-        [[ -n "${name}" ]] || continue
-        [[ -n "${printed_mod[${name}]-}" ]] && continue
-
-        module_usage "${name}"
-
-        printed=1
-        printed_mod["${name}"]=1
-
-    done
-
-    (( printed )) || printf '%s\n' '(no module usage found)' ''
-
-}
 parse_global () {
 
     MODULE_CMD="h"
@@ -265,14 +175,20 @@ dispatch () {
     shift || true
 
     case "${cmd}" in
-        h) render_doc; return 0 ;;
-        v) echo "v0.1.0"; return 0 ;;
+        h)
+            local -a mods=()
+            local -A seen=()
+
+            load_walk doc "${MODULE_DIR:?dispatch: MODULE_DIR not set}" seen mods || return 2
+            render_doc "${mods[@]-}"
+
+            return $?
+        ;;
+        v) cmd_version; return $? ;;
     esac
 
     if ! [[ "${cmd}" =~ ^[A-Za-z0-9][A-Za-z0-9_-]*$ ]]; then
-        eprint "Unknown command: ( ${cmd} )"
-        eprint "See Docs: --help"
-        return 2
+        die "Unknown command: ( ${cmd} )"$'\n'"See Docs: --help" 2
     fi
 
     local sub="${1-}" mod="" fn=""
@@ -300,17 +216,37 @@ dispatch () {
         return $?
     fi
 
-    eprint "Unknown command: ( ${cmd} )"
-    eprint "See Docs: --help"
-    return 2
+    if [[ -n "${sub}" && "${sub}" != -* ]] && compgen -A function "cmd_${mod}_" >/dev/null 2>&1; then
+
+        local docs="--help"
+        declare -F "cmd_${mod}_help" >/dev/null 2>&1 && docs="${cmd}-help"
+
+        die "Unknown subcommand: ( ${sub} ) for ( ${cmd} )"$'\n'"See Docs: ${docs}" 2
+
+    fi
+
+    die "Unknown command: ( ${cmd} )"$'\n'"See Docs: --help" 2
+
+}
+report_err () {
+
+    local code="${1-}" cmd="${2-}" file="${3-}" line="${4-}"
+
+    [[ "${code}" =~ ^[0-9]+$ ]] && (( code )) || code=1
+
+    printf '%s\n' "❌ Failed ( exit ${code} ) : ${file##*/}:${line}: ${cmd}" >&2
+
+    exit "${code}"
 
 }
 load () {
 
     cd_root
 
-    local old_trap="$(trap -p ERR 2>/dev/null || true)"
-    if declare -F on_err >/dev/null 2>&1; then trap 'on_err "$?"' ERR; fi
+    local old_trap=""
+    old_trap="$(trap -p ERR 2>/dev/null || true)"
+
+    if declare -F on_err >/dev/null 2>&1; then on_err report_err; fi
 
     local dir="${MODULE_DIR:-}"
     [[ -n "${dir}" ]] || { die "load: MODULE_DIR not set" 2; return 2; }

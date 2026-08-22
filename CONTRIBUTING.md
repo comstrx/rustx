@@ -31,7 +31,7 @@ If you are unsure about scope, start with a short [discussion](https://github.co
 
 1. Fork the repo and clone it locally.
 2. Create a new branch for your change.
-3. Follow the development instructions in the [README](https://github.com/comstrx/rustx/blob/main/README.md).
+3. Follow the development instructions in the [README](https://github.com/comstrx/rustx/blob/main/README.md) and the [gate list](https://github.com/comstrx/rustx/blob/main/docs/index.md#gates).
 4. Make your change, add/adjust tests/docs as needed.
 5. Open a PR and follow the [PR template/checklist](https://github.com/comstrx/rustx/blob/main/.github/PULL_REQUEST_TEMPLATE.md).
 

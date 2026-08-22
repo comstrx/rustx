@@ -1,0 +1,84 @@
+log:
+  quiet: false
+  level: 'warn'
+  verbosity: 0
+
+check-for-app-update: false
+
+format:
+  pretty: false
+  json:
+    pretty: false
+    legacy: false
+  spdx-json:
+    pretty: false
+  cyclonedx-json:
+    pretty: false
+  cyclonedx-xml:
+    pretty: false
+
+scope: 'squashed'
+parallelism: 0
+
+relationships:
+  package-file-ownership: true
+  package-file-ownership-overlap: true
+
+compliance:
+  missing-name: 'keep'
+  missing-version: 'keep'
+
+enrich: []
+
+unknowns:
+  remove-when-packages-defined: false
+  executables-without-packages: true
+  unexpanded-archives: true
+
+exclude:
+  - '**/.git'
+  - '**/.vscode'
+  - '**/.idea'
+  - '**/node_modules'
+  - '**/dist'
+  - '**/build'
+  - '**/target'
+  - '**/vendor'
+  - '**/__pycache__'
+  - '**/.pytest_cache'
+  - '**/.mypy_cache'
+  - '**/.ruff_cache'
+  - '**/.cache'
+  - '**/.nyc_output'
+  - '**/.next'
+  - '**/.nuxt'
+  - '**/.turbo'
+
+package:
+  search-indexed-archives: true
+  search-unindexed-archives: false
+  exclude-binary-overlap-by-ownership: true
+
+license:
+  content: 'unknown'
+  coverage: 75
+
+file:
+  metadata:
+    selection: 'owned-by-package'
+    digests:
+      - 'sha256'
+  content:
+    skip-files-above-size: 256000
+
+source:
+  base-path: '.'
+  file:
+    digests:
+      - 'SHA-256'
+
+registry:
+  insecure-skip-tls-verify: false
+  insecure-use-http: false
+  ca-cert: ''
+  auth: []

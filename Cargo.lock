@@ -43,7 +43,7 @@ name = "benches"
 version = "0.1.0"
 dependencies = [
  "criterion",
- "rustx-typing",
+ "rustx-base",
 ]
 
 [[package]]
@@ -51,7 +51,7 @@ name = "bloats"
 version = "0.1.0"
 dependencies = [
  "rustx",
- "rustx-typing",
+ "rustx-base",
 ]
 
 [[package]]
@@ -177,7 +177,7 @@ checksum = "91622ff5e7162018101f2fea40d6ebf4a78bbe5a49736a2020649edf9693679e"
 name = "examples"
 version = "0.1.0"
 dependencies = [
- "rustx-typing",
+ "rustx-base",
 ]
 
 [[package]]
@@ -300,11 +300,11 @@ checksum = "7a2d987857b319362043e95f5353c0535c1f58eec5336fdfcf626430af7def58"
 name = "rustx"
 version = "0.1.0"
 dependencies = [
- "rustx-typing",
+ "rustx-base",
 ]
 
 [[package]]
-name = "rustx-typing"
+name = "rustx-base"
 version = "0.1.0"
 
 [[package]]
@@ -380,7 +380,8 @@ dependencies = [
 name = "tests"
 version = "0.1.0"
 dependencies = [
- "rustx-typing",
+ "rustx",
+ "rustx-base",
 ]
 
 [[package]]

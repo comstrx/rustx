@@ -1,4 +1,4 @@
-edition = "2021"
+edition = "2024"
 style_edition = "2024"
 
 max_width = 120
@@ -24,6 +24,11 @@ imports_granularity = "Crate"
 group_imports = "StdExternalCrate"
 
 format_code_in_doc_comments = true
+doc_comment_code_block_width = 100
 normalize_doc_attributes = true
 format_macro_bodies = true
 format_macro_matchers = true
+
+condense_wildcard_suffixes = true
+error_on_line_overflow = true
+error_on_unformatted = true

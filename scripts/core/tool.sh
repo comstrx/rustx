@@ -19,30 +19,12 @@ tool_docflags_deny () {
     printf '%s' "-Dwarnings"
 
 }
-tool_path_prepend () {
-
-    local d="${1-}"
-    [[ -n "${d}" ]] || return 0
-
-    case ":${PATH-}:" in
-        *":${d}:"*) ;;
-        *)
-            if [[ -n "${PATH-}" ]]; then
-                PATH="${d}:${PATH}"
-            else
-                PATH="${d}"
-            fi
-        ;;
-    esac
-
-    export PATH
-    return 0
-
-}
 tool_export_cargo_bin () {
 
-    local cargo_home="${CARGO_HOME:-${HOME}/.cargo}"
-    tool_path_prepend "${cargo_home}/bin"
+    local cargo_home=""
+    cargo_home="$(unix_path "${CARGO_HOME:-${HOME}/.cargo}")"
+
+    path_prepend "${cargo_home}/bin"
 
     [[ -n "${GITHUB_PATH:-}" ]] && printf '%s\n' "${cargo_home}/bin" >> "${GITHUB_PATH}"
     return 0
@@ -69,22 +51,27 @@ tool_pick_sort_locale () {
 tool_pick_sort_bin () {
 
     ensure_pkg sort 1>&2
+
     LC_ALL=C sort -V </dev/null >/dev/null 2>&1 && { printf '%s\n' "sort"; return 0; }
-    die "Need GNU sort with -V. check pkg_mac_gnu_shim/verify." 2
+    die "sort: no version sort (-V) support; install GNU coreutils and re-run" 2
 
 }
 tool_sort_ver () {
 
-    local loc="$(tool_pick_sort_locale)"
-    local sbin="$(tool_pick_sort_bin)"
+    local loc="" sbin=""
+
+    loc="$(tool_pick_sort_locale)"
+    sbin="$(tool_pick_sort_bin)"
 
     LC_ALL="${loc}" "${sbin}" -V
 
 }
 tool_sort_uniq () {
 
-    local loc="$(tool_pick_sort_locale)"
-    local sbin="$(tool_pick_sort_bin)"
+    local loc="" sbin=""
+
+    loc="$(tool_pick_sort_locale)"
+    sbin="$(tool_pick_sort_bin)"
 
     LC_ALL="${loc}" "${sbin}" -u
 
@@ -107,7 +94,11 @@ tool_normalize_version () {
 }
 tool_active_version () {
 
-    printf '%s\n' "$(rustup show active-toolchain 2>/dev/null | awk '{print $1}' || true)"
+    local out=""
+    out="$(rustup show active-toolchain 2>/dev/null || true)"
+
+    out="${out%%$'\n'*}"
+    printf '%s\n' "${out%% *}"
 
 }
 tool_stable_version () {
@@ -136,7 +127,7 @@ tool_msrv_version () {
 
     fi
 
-    have="$(rustc -V 2>/dev/null | awk '{print $2}' | sed 's/[^0-9.].*$//')"
+    have="$(rustc -V 2>/dev/null | awk '{print $2}' | sed 's/[^0-9.].*$//' || true)"
     [[ -n "${have}" ]] || die "rustc not available to detect current version" 2
 
     if has cargo; then
@@ -174,9 +165,26 @@ tool_resolve_chain () {
     printf '%s\n' "${tc}"
 
 }
+tool_has_component () {
+
+    local tc="${1-}" comp="${2-}" line=""
+
+    [[ -n "${tc}" && -n "${comp}" ]] || return 1
+
+    while IFS= read -r line; do
+
+        line="${line%$'\r'}"
+        [[ "${line}" == "${comp}" || "${line}" == "${comp}-"* ]] && return 0
+
+    done < <( rustup component list --toolchain "${tc}" --installed 2>/dev/null || true )
+
+    return 1
+
+}
 tool_setup_chain () {
 
-    local tc="$(tool_resolve_chain "${1:-}")"
+    local tc=""
+    tc="$(tool_resolve_chain "${1:-}")"
     [[ -n "${tc}" ]] || die "tool_setup_chain: empty toolchain" 2
 
     rustup run "${tc}" rustc -V >/dev/null 2>&1 && return 0
@@ -206,7 +214,7 @@ ensure_python () {
 }
 ensure_node () {
 
-    local want="${1:-25}" v="" major=""
+    local want="${1:-25}" v="" major="" volta_dir=""
 
     if has node; then
 
@@ -227,16 +235,18 @@ ensure_node () {
                     || die "Failed to install Volta (winget)" 2
             }
 
-            tool_path_prepend "/c/Program Files/Volta"
+            volta_dir="$(unix_path "${PROGRAMFILES:-${ProgramFiles:-C:\\Program Files}}")/Volta"
+            path_prepend "${volta_dir}"
         ;;
         *)
             ensure_pkg curl 1>&2
 
             export VOLTA_HOME="${VOLTA_HOME:-${HOME}/.volta}"
-            tool_path_prepend "${VOLTA_HOME}/bin"
+            volta_dir="${VOLTA_HOME}/bin"
+            path_prepend "${volta_dir}"
 
-            if ! has volta; then run curl -fsSL https://get.volta.sh | bash || die "Failed to install Volta." 2; fi
-            tool_path_prepend "${VOLTA_HOME}/bin"
+            if ! has volta; then run curl --proto '=https' --tlsv1.2 -fsSL https://get.volta.sh | bash || die "Failed to install Volta." 2; fi
+            path_prepend "${volta_dir}"
         ;;
     esac
 
@@ -256,48 +266,60 @@ ensure_node () {
     [[ "${major}" =~ ^[0-9]+$ ]] || die "Can't parse Node.js version after install: ${v}" 2
     (( major >= want )) || die "Node install did not satisfy requirement (need ${want}+, found v${v})." 2
 
-    if [[ -n "${GITHUB_PATH:-}" ]]; then
-        case "$(os_name)" in
-            windows) printf '%s\n' "/c/Program Files/Volta" >> "${GITHUB_PATH}" ;;
-            *)       printf '%s\n' "${VOLTA_HOME}/bin" >> "${GITHUB_PATH}" ;;
-        esac
-    fi
+    [[ -n "${GITHUB_PATH:-}" && -n "${volta_dir}" ]] && printf '%s\n' "${volta_dir}" >> "${GITHUB_PATH}"
+
+    return 0
 
 }
 ensure_rust () {
 
     ensure_pkg curl 1>&2
 
-    local stable="$(tool_stable_version)"
-    local nightly="$(tool_nightly_version)"
-    local msrv="$(tool_msrv_version)"
-    local uname_s="$(uname -s 2>/dev/null || true)"
+    local stable="" nightly="" msrv="" os=""
+
+    stable="$(tool_stable_version)"
+    nightly="$(tool_nightly_version)"
+    msrv="$(tool_msrv_version)"
+    os="$(os_name)"
 
     tool_export_cargo_bin
 
     if ! has rustup; then
 
-        case "${uname_s}" in
-            MSYS*|MINGW*|CYGWIN*)
-                local tmp="${TMPDIR:-${TEMP:-/tmp}}/rustup-init.$$.exe"
+        case "${os}" in
+            windows)
+                local tmp_dir="" tmp="" arch=""
 
-                run curl -fsSL -o "${tmp}" "https://win.rustup.rs/x86_64" || die "Failed to download rustup-init.exe" 2
+                case "$(uname -m 2>/dev/null || true)" in
+                    x86_64|amd64)  arch="x86_64" ;;
+                    aarch64|arm64) arch="aarch64" ;;
+                    i686|i386)     arch="i686" ;;
+                    *) die "rustup: unsupported Windows architecture: $(uname -m 2>/dev/null || printf '%s' unknown)" 2 ;;
+                esac
+
+                fs_tmp_dir tmp_dir "rustx-rustup"
+                tmp="${tmp_dir}/rustup-init.exe"
+
+                run curl --proto '=https' --tlsv1.2 -fsSL -o "${tmp}" "https://win.rustup.rs/${arch}" || die "Failed to download rustup-init.exe" 2
                 run "${tmp}" -y --profile minimal --default-toolchain "${stable}" || die "Failed to install rustup (Windows)" 2
 
-                rm -f -- "${tmp}" 2>/dev/null || true
+                fs_tmp_release "${tmp_dir}"
             ;;
-            Darwin|Linux)
+            mac|linux)
                 run curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
                     | sh -s -- -y --profile minimal --default-toolchain "${stable}" \
                     || die "Failed to install rustup." 2
             ;;
             *)
-                die "Unsupported OS for rustup install: ${uname_s}" 2
+                die "Unsupported OS for rustup install: ${os}" 2
             ;;
         esac
 
         tool_export_cargo_bin
-        [[ -f "${HOME}/.cargo/env" ]] && source "${HOME}/.cargo/env" || true
+
+        if [[ -f "${HOME}/.cargo/env" ]]; then
+            source "${HOME}/.cargo/env"
+        fi
 
         has rustup || die "rustup installed but not found in PATH (check ~/.cargo/bin)." 2
 
@@ -317,7 +339,7 @@ ensure_component () {
     local comp="${1:-}" tc="${2:-}"
 
     [[ -n "${comp}" ]] || die "ensure_component: requires a component name" 2
-    [[ -z "${tc}" ]] && tc="stable";
+    [[ -z "${tc}" ]] && tc="stable"
 
     has rustup || ensure_rust
 
@@ -326,13 +348,15 @@ ensure_component () {
 
     if [[ "${comp}" == "llvm-tools-preview" ]]; then
 
-        rustup component list --toolchain "${tc}" --installed 2>/dev/null | grep -qE '^(llvm-tools|llvm-tools-preview)\b' && return 0
+        tool_has_component "${tc}" llvm-tools-preview && return 0
+        tool_has_component "${tc}" llvm-tools && return 0
+
         run rustup component add --toolchain "${tc}" llvm-tools-preview 2>/dev/null || run rustup component add --toolchain "${tc}" llvm-tools
         return 0
 
     fi
 
-    rustup component list --toolchain "${tc}" --installed 2>/dev/null | grep -qE "^${comp}\\b" && return 0
+    tool_has_component "${tc}" "${comp}" && return 0
     run rustup component add --toolchain "${tc}" "${comp}"
 
 }
@@ -390,7 +414,7 @@ tool_release_asset () {
 
     local tool="${1:-}" version="${2:-}" os="" arch=""
     os="$(os_name)"
-    arch="$(uname -m)"
+    arch="$(uname -m 2>/dev/null || true)"
     [[ -n "${tool}" && -n "${version}" ]] || die "release asset: missing tool/version" 2
 
     case "${arch}" in
@@ -462,9 +486,7 @@ ensure_release_tool () {
     asset="$(tool_release_asset "${tool}" "${version}")" || return $?
     [[ "$(os_name)" == "windows" ]] && exe+=".exe"
 
-    temp="$(mktemp -d "${TMPDIR:-/tmp}/rustx-${tool}.XXXXXX")" || die "${tool}: failed to create temporary directory" 2
-    [[ -n "${temp}" && -d "${temp}" ]] || die "${tool}: failed to create temporary directory" 2
-    trap 'rm -rf -- "${temp:-}" 2>/dev/null || true; trap - RETURN' RETURN
+    fs_tmp_dir temp "rustx-${tool}"
 
     run curl --proto '=https' --tlsv1.2 -fsSL -o "${temp}/${manifest}" "${base}/${manifest}"
     run curl --proto '=https' --tlsv1.2 -fsSL -o "${temp}/${asset}" "${base}/${asset}"
@@ -496,14 +518,21 @@ ensure_release_tool () {
     [[ -f "${unpack}/${exe}" ]] || die "${tool}: binary missing after extraction" 2
 
     run mkdir -p -- "${bin_dir}"
-    run chmod 0755 "${unpack}/${exe}"
+    run chmod 0755 -- "${unpack}/${exe}"
     run mv -f -- "${unpack}/${exe}" "${bin_dir}/${exe}"
 
-    tool_path_prepend "${bin_dir}"
+    path_prepend "${bin_dir}"
     [[ -n "${GITHUB_PATH:-}" ]] && printf '%s\n' "${bin_dir}" >> "${GITHUB_PATH}"
 
+    fs_tmp_release "${temp}"
+
     has "${tool}" || die "${tool}: installed but not found in PATH" 2
-    run "${tool}" --version >/dev/null 2>&1 || run "${tool}" version >/dev/null 2>&1
+
+    run "${tool}" --version >/dev/null 2>&1 \
+        || run "${tool}" version >/dev/null 2>&1 \
+        || die "${tool}: installed at ${bin_dir}/${exe} but will not run" 2
+
+    return 0
 
 }
 ensure () {

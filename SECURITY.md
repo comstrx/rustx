@@ -11,8 +11,7 @@ Preferred (fastest):
 
 - [GitHub Private Vulnerability Reporting / Security Advisories](https://github.com/comstrx/rustx/security/advisories/new) 🔒
 
-If the above is not available, contact the maintainer(s) privately via the repository contact methods:  
-[Repository](https://github.com/comstrx/rustx)
+If the above is not available, email the maintainer privately: <comstrx@gmail.com>
 
 ## What belongs here
 
@@ -29,7 +28,7 @@ If the above is not available, contact the maintainer(s) privately via the repos
 
 ## Include this (makes triage fast)
 
-- affected crate(s) + version(s)
+- affected crate(s) + the commit or tag you are on
 - impact (what can an attacker do?) + assumptions / threat model
 - minimal reproduction or PoC (safe and small)
 - environment details (OS/arch, `rustc --version`)

@@ -10,14 +10,14 @@ Welcome! This page is the fastest way to get help with `rustx` with the least ba
 | Report a reproducible bug         | 🐞 [Issues](https://github.com/comstrx/rustx/issues)                    |
 | Report a security issue (private) | 🔒 [Security](https://github.com/comstrx/rustx/security/advisories/new) |
 | Read docs / guides                | 📚 [Docs](https://github.com/comstrx/rustx/tree/main/docs)              |
-| Review recent changes             | 🧾 [Releases](https://github.com/comstrx/rustx/releases)                |
+| Review recent changes             | 🧾 [Commits](https://github.com/comstrx/rustx/commits/main)             |
 
 ---
 
 ## Before you post (2 minutes)
 
 - Search existing Issues/Discussions (duplicates slow everyone down).
-- Confirm you are on the latest release (many bugs are already fixed).
+- Confirm you are on the latest commit of `main` (many bugs are already fixed).
 - Reduce to a minimal reproduction (small snippet or a tiny public repo).
 
 If you cannot reproduce it reliably, we probably cannot fix it reliably.
@@ -31,7 +31,7 @@ When opening an Issue, please include:
 - What happened vs what you expected
 - Minimal repro: exact steps + code (or a small public repo)
 - Versions:
-  - `rustx` version(s)
+  - `rustx` commit or tag
   - `rustc --version`
 - Environment: OS + architecture (Linux x86_64, macOS arm64, Windows x86_64, etc.)
 - Output: exact error/logs (copy as text, not screenshots)

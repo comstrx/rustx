@@ -1,9 +1,8 @@
 # Code of Conduct
 
-`rustx` is a community-driven project.
+`rustx` is an open-source project, and everyone taking part in it is covered by this policy.
 
-- We aim for a welcoming
-- professional space where people can build, learn, and collaborate safely.
+- We aim for a welcoming, professional space where people can build, learn, and collaborate safely.
 - This applies to: Issues, Pull Requests, Discussions, and related channels.
 - Reference (baseline): https://www.rust-lang.org/policies/code-of-conduct/
 
@@ -31,8 +30,9 @@
 
 If you experience or witness a violation, report it:
 
-- Private contact via repository channels: [Repository](https://github.com/comstrx/rustx)
-- Request a private follow-up via [Discussions](https://github.com/comstrx/rustx/discussions)
+Email the maintainer privately: <comstrx@gmail.com>
+
+Do not report a violation in Issues or Discussions — both are public.
 
 For security vulnerabilities, use [private vulnerability reporting](https://github.com/comstrx/rustx/security/advisories/new).
 

@@ -1,0 +1,85 @@
+# Basics
+
+- name: 'triage'
+  color: 'FBCA04'
+  description: 'Needs initial review / classification'
+
+- name: 'bug'
+  color: 'D73A4A'
+  description: 'Something is not working'
+
+- name: 'enhancement'
+  color: 'A2EEEF'
+  description: 'New feature or improvement request'
+
+- name: 'workflow'
+  color: '1D76DB'
+  description: 'Workflows changes'
+
+- name: 'ci'
+  color: '0052CC'
+  description: 'CI pipeline and GitHub Actions dependency changes'
+
+- name: 'automation'
+  color: 'FF6B6B'
+  description: 'GitHub automation changes'
+
+- name: 'docs'
+  color: '0075CA'
+  description: 'Documentation changes'
+
+- name: 'security'
+  color: 'B60205'
+  description: 'Security policy and security-related changes'
+
+- name: 'cargo'
+  color: 'C2E0C6'
+  description: 'Cargo manifests, lockfiles changes'
+
+- name: 'release'
+  color: '0E8A16'
+  description: 'Changelog changes, release tracking'
+
+- name: 'tooling'
+  color: 'BFDADC'
+  description: 'Dev tooling changes, scripts, and repo configs'
+
+# Base Crates
+
+- name: 'tests'
+  color: '5319E7'
+  description: 'Crates tests changes'
+
+- name: 'benches'
+  color: 'FF9F1C'
+  description: 'Crates benchmarks changes'
+
+- name: 'examples'
+  color: 'D4C5F9'
+  description: 'Crates examples changes'
+
+- name: 'bloats'
+  color: 'F9D0C4'
+  description: 'Crates size changes'
+
+- name: 'fuzz'
+  color: '6F42C1'
+  description: 'Crates fuzzing changes'
+
+- name: 'supply-chain'
+  color: '2E8B57'
+  description: 'Crates audits changes, trusted supply chains'
+
+- name: 'crates'
+  color: '0B7A75'
+  description: 'Changes under crates/*'
+
+# Custom Crates
+
+- name: 'crates:rustx'
+  color: 'C85A17'
+  description: 'Changes in crates/rustx (facade)'
+
+- name: 'crates:base'
+  color: 'C85A17'
+  description: 'Changes in crates/base (rustx-base)'

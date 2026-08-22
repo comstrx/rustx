@@ -12,12 +12,15 @@ homepage.workspace = true
 authors.workspace = true
 
 [dependencies]
-typing.workspace = true
+rustx-base.workspace = true
 
 [dev-dependencies]
 criterion.workspace = true
 
 [[bench]]
-name = "typing"
-path = "typing.rs"
+name = "base"
+path = "base.rs"
 harness = false
+
+[lints]
+workspace = true
