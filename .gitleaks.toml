@@ -37,7 +37,7 @@ paths = ['''(^|/)\.secret$''']
 description = "Ignore obvious placeholders"
 regexTarget = "secret"
 regexes = [
-    '''(?i)\b(?:fake|dummy|example|sample|test|placeholder|redacted)\b''',
+    '''(?i)\b(?:fake|dummy|example|sample|placeholder|redacted)\b''',
     '''(?i)\b(?:xxxx+|yyyy+|zzzz+|0000+|1111+)\b''',
     '''(?i)\b(?:your[-_ ]?(?:api[-_ ]?)?key|your[-_ ]?token|insert[-_ ]?here)\b''',
 ]

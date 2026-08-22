@@ -33,6 +33,18 @@ skip-tree = [
 
 [bans.build]
 executables = "deny"
+interpreted = "deny"
+include-dependencies = true
+
+bypass = [
+    { crate = "autocfg", allow-globs = [
+        "tests/*",
+    ] },
+    { crate = "zerocopy", allow-globs = [
+        "ci/*",
+        "githooks/*",
+    ] },
+]
 
 [sources]
 unknown-registry = "deny"

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 [[ -n "${BASH_VERSION:-}" ]] || { printf '%s\n' "env.sh: Bash required." >&2; return 2 2>/dev/null || exit 2; }
-(( ${BASH_VERSINFO[0]:-0} >= 4 )) || { printf '%s\n' "env.sh: Bash 5+ required." >&2; return 2 2>/dev/null || exit 2; }
+(( ${BASH_VERSINFO[0]:-0} >= 5 )) || { printf '%s\n' "env.sh: Bash 5+ required." >&2; return 2 2>/dev/null || exit 2; }
 
 [[ "${BASH_SOURCE[0]}" != "${0}" ]] || { printf '%s\n' "env.sh: this file should not be run externally." >&2; exit 2; }
 [[ -n "${ENV_LOADED:-}" ]] && return 0

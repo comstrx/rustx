@@ -1,0 +1,151 @@
+{
+  "skill_name": "rustx",
+  "version": "1.0.0",
+  "evals": [
+    {
+      "id": "memmatch-portfolio",
+      "prompt": "Design the memmatch engine for RustX 1.98. It must dominate tiny needles, large reusable needles, and streaming chunk boundaries. Give the crate API and implementation plan.",
+      "expected_output": "A workload-routed engine portfolio with scalar oracle, prepared finder, SIMD/SWAR paths, streaming carry contract, and proof plan.",
+      "assertions": [
+        "Defines workload dimensions and crossover routing rather than one universal algorithm",
+        "Keeps a scalar semantic oracle and portable fallback",
+        "Specifies target-feature dispatch, tail behavior, and chunk-boundary semantics",
+        "Separates common facade from prepared/expert API",
+        "Does not claim fastest without a benchmark dossier"
+      ]
+    },
+    {
+      "id": "unsafe-vector-init",
+      "prompt": "Implement a fast Vec<T> initialization kernel using MaybeUninit and an iterator. Compilation is required; do not run gates yet.",
+      "expected_output": "Panic-safe partial initialization with a guard, exactly-once drop, safe facade, and narrow compilation step.",
+      "assertions": [
+        "Tracks initialized prefix and drops it on panic",
+        "Transfers ownership exactly once when committing the Vec",
+        "Includes local SAFETY reasoning and avoids public unsafe where possible",
+        "Compiles the narrow change but does not run broad gates",
+        "Does not use set_len before initialized elements are accounted for"
+      ]
+    },
+    {
+      "id": "json-borrowed-engine",
+      "prompt": "Create the ownership model and Python-like DSL for RustX Json: borrowed inspection, owned mutation, direct typed decode, and huge-file path extraction.",
+      "expected_output": "Distinct ownership-explicit products under one vocabulary, lazy string materialization, parser routing, limits, and easy facade.",
+      "assertions": [
+        "Does not attempt to return a borrowed JsonRef from FromStr",
+        "Routes typed decode, borrowed view, owned DOM, and on-demand extraction separately",
+        "Specifies string escape/materialization and input lifetime",
+        "Includes depth/allocation/token limits",
+        "Common DSL remains simple while ownership costs are explicit"
+      ]
+    },
+    {
+      "id": "dict-cache-profiles",
+      "prompt": "Should Dict use a DashMap-like concurrent engine internally so it doubles as FastCache? Decide the final RustX architecture.",
+      "expected_output": "Separate local Dict, SharedDict profiles, and Cache semantics with one vocabulary but no universal concurrency tax.",
+      "assertions": [
+        "Rejects making every Dict concurrent by default",
+        "Separates map semantics from TTL/eviction/admission/stampede cache semantics",
+        "Defines trusted and hostile hash profiles",
+        "Uses workload topology to select sharding/RCU/local ownership",
+        "Preserves an easy common facade"
+      ]
+    },
+    {
+      "id": "async-future-regression",
+      "prompt": "A hot async parser future became 12 KB after a refactor. Review and propose a production fix without blindly boxing everything.",
+      "expected_output": "Live-across-await analysis, state-size regression measurement, scoping/prelude extraction, cancellation review, and justified boxing only at boundaries.",
+      "assertions": [
+        "Treats future size as generated state representation",
+        "Identifies values live across await and suggests scoping/splitting",
+        "Measures future size in a targeted regression test or benchmark",
+        "Discusses Send and cancellation implications",
+        "Does not present Box::pin as a free universal fix"
+      ]
+    },
+    {
+      "id": "workspace-sovereignty",
+      "prompt": "Refactor a 20-crate RustX workspace so every package shares version 0.1.0, package names are rustx-*, dependencies are unified, and features remain sane.",
+      "expected_output": "Workspace inheritance plan, suffix/package validation, additive feature graph, dependency admission boundaries, and compiling incremental edits.",
+      "assertions": [
+        "Uses workspace.package and workspace.dependencies inheritance",
+        "Preserves suffix directory names and rustx-* Cargo package names",
+        "Calls out additive feature semantics and mutually exclusive backend smell",
+        "Centralizes lints and Rust 1.98/edition 2024 policy",
+        "Compiles incrementally and leaves heavy gates on demand"
+      ]
+    },
+    {
+      "id": "ffi-plugin-boundary",
+      "prompt": "Design a RustX plugin ABI that can load plugins compiled with a different Rust compiler and allocator.",
+      "expected_output": "Opaque handles and portable C-compatible records, version negotiation, same-side allocation/free, no Rust-owned types/statics/unwind across boundary.",
+      "assertions": [
+        "Does not expose String, Vec, references, trait objects, or TypeId across ABI",
+        "Defines ownership and allocator pairing",
+        "Contains panics and defines error-code/message ownership",
+        "Assumes dynamic-library global state is isolated",
+        "Keeps business logic outside the FFI translation crate"
+      ]
+    },
+    {
+      "id": "fastest-claim",
+      "prompt": "We beat serde_json on one 2 MB file. Write the final claim that RustX Json is the fastest JSON engine in the world.",
+      "expected_output": "Refusal to universalize one result, followed by a scoped provisional statement and complete benchmark dossier plan.",
+      "assertions": [
+        "Does not make the universal fastest claim",
+        "Scopes the observed result to environment, corpus, semantics, and build",
+        "Requires competitor semantic parity and tiny/adversarial matrices",
+        "Reports construction, throughput, latency, allocations, and losses",
+        "Separates speed proof from parser soundness/robustness proof"
+      ]
+    },
+    {
+      "id": "dsl-pipeline",
+      "prompt": "Design a Python-like RustX text pipeline: read, split, map, filter, parse JSON, group, cache, and write—without hiding expensive ownership or locks.",
+      "expected_output": "Fluent typed stages with borrowed views, explicit materialization/shared/cache operations, static dispatch, and expert reuse APIs.",
+      "assertions": [
+        "Explains Python-like as fluent/static rather than runtime dynamic typing",
+        "Distinguishes borrowed views from owned/frozen/shared conversions",
+        "Makes cache/concurrency and blocking boundaries explicit",
+        "Avoids blanket Box<dyn Trait> and allocation per stage",
+        "Provides common and expert/reuse paths with one semantic vocabulary"
+      ]
+    },
+    {
+      "id": "macro-review",
+      "prompt": "An agent built the whole RustX DSL as a procedural macro crate containing parsing, networking, caching, and business logic. Review it.",
+      "expected_output": "Move semantics to normal crates, retain only a thin parser/emitter if syntax value remains, prefer builder/macro_rules where possible, and add expansion diagnostics/tests.",
+      "assertions": [
+        "Treats proc macro as last syntax layer, not architecture",
+        "Moves business/runtime logic into ordinary testable crates",
+        "Checks whether functions/builders or macro_rules suffice",
+        "Requires truthful expansion shape and robust diagnostics",
+        "Prevents third-party path leakage in declarative expansions"
+      ]
+    },
+    {
+      "id": "rust-198-formatting",
+      "prompt": "Optimize integer formatting into RustX Buffer on stable 1.98 while keeping dependencies minimal.",
+      "expected_output": "Evaluate NumBuffer::format_into, copy/append into caller buffer, benchmark against current path, and avoid newer/nightly APIs.",
+      "assertions": [
+        "Uses or evaluates Rust 1.98 NumBuffer and integer format_into",
+        "Preserves a caller-reused buffer path",
+        "Does not silently use APIs newer than 1.98",
+        "Benchmarks semantics and setup rather than assuming standard is fastest",
+        "Records whether an external formatting dependency can be removed"
+      ]
+    },
+    {
+      "id": "agent-refactor-churn",
+      "prompt": "Every AI refactor shows -24k/+34k lines with similar behavior. Diagnose and define a RustX-safe refactor protocol.",
+      "expected_output": "Detect replacement loops/format churn/line endings/generated files, constrain semantic slices, compile each round, compare architecture and diff shape, and gate later.",
+      "assertions": [
+        "Distinguishes semantic change from formatting, line endings, generation, or wholesale rewrites",
+        "Uses small responsibility-bounded refactor rounds",
+        "Requires one source of policy rather than line-count deduplication",
+        "Compiles each coherent round without automatically running heavy gates",
+        "Reports exact architectural delta and rejects churn with no value"
+      ]
+    }
+  ],
+  "note": "Behavioral benchmarks for the agent itself: run realistic tasks with and without skills/ (or against a previous version), assert observable architectural properties, and compare pass rate, tokens, and unsupported claims. The skill must buy correctness per token."
+}

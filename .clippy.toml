@@ -1,6 +1,6 @@
 msrv = "1.98.0"
 
-avoid-breaking-exported-api = true
+avoid-breaking-exported-api = false
 
 doc-valid-idents = ["RustX", "ToolX", ".."]
 

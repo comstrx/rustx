@@ -465,6 +465,9 @@ cmd_sanitizer () {
 
     code=$?
 
+    # The tee procsub flushes ${log} asynchronously; wait for it before grepping.
+    wait "$!" 2>/dev/null || true
+
     set -e
     [[ -n "${err_trap}" ]] && eval "${err_trap}"
 
@@ -579,7 +582,7 @@ cmd_vet_import_best () {
 }
 cmd_vet_trust_best () {
 
-    cmd_vet_trust dtolnay                                 --criteria safe-to-deploy
+    cmd_vet_trust --all dtolnay                           --criteria safe-to-deploy
     cmd_vet_trust r-efi dvdhrm                            --criteria safe-to-deploy
     cmd_vet_trust libfuzzer-sys fitzgen                   --criteria safe-to-deploy
     cmd_vet_trust getrandom josephlr                      --criteria safe-to-deploy

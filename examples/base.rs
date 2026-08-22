@@ -1,6 +1,6 @@
 //! Minimal end-to-end use of `rustx-base`.
 //!
-//! Run with: `cargo run --package examples --example base`
+//! Run with: `cargo run --package examples --example base`.
 
 use rustx_base::Typing;
 

@@ -18,9 +18,10 @@
 ## Overview
 
 <code>rustx</code> is the Rust workspace for a family of focused ToolX crates
-maintained by [comstrx](https://github.com/comstrx). Workspace crates use the
+maintained by [comstrx](https://github.com/comstrx). Member crates use the
 <code>rustx-&lt;name&gt;</code> package convention and live under
-<code>crates/&lt;name&gt;</code>.
+<code>crates/&lt;name&gt;</code>, with <code>crates/rustx</code> as the facade
+that re-exports them all.
 
 ## Usage
 

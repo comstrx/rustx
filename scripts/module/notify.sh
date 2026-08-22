@@ -6,7 +6,7 @@ cmd_notify_help () {
 
     printf '    %s\n' \
         "notify                     * Send notification" \
-        "    --platform               Platform <telegram|slack|discord|webhook>, Default: detect env then telegram" \
+        "    --platform               Platform <telegram|slack|discord|webhook>, Default: every platform with credentials configured" \
         "    --token                  Token value (telegram mode)" \
         "    --chat                   Chat id (telegram mode)" \
         "    --webhook                Webhook url (slack|discord|webhook url)" \
@@ -196,7 +196,7 @@ cmd_notify () {
         status title message \
         token chat telegram_token telegram_chat \
         slack_webhook discord_webhook webhook_url webhook \
-        retries:int=3 delay:float=1 timeout:float=10 max_time:float=20 retry_max_time:float=60 \
+        retries:int=3 delay:int=1 timeout:float=10 max_time:float=20 retry_max_time:float=60 \
         'platform|platforms:list' \
     )
 

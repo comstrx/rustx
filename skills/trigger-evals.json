@@ -1,0 +1,82 @@
+[
+  {
+    "query": "Design the arena-backed JsonRef engine for RustX and keep it stable on Rust 1.98",
+    "should_trigger": true
+  },
+  {
+    "query": "review this unsafe SIMD scanner and prove its tail loads are sound",
+    "should_trigger": true
+  },
+  {
+    "query": "our async Rust service future exploded in size after an await refactor",
+    "should_trigger": true
+  },
+  {
+    "query": "عاوز نبني Dict سريع جدا ب DSL سهل داخل rustx",
+    "should_trigger": true
+  },
+  {
+    "query": "centralize versions and features across all RustX crates",
+    "should_trigger": true
+  },
+  {
+    "query": "benchmark our memchr replacement fairly against memchr and hyperscan",
+    "should_trigger": true
+  },
+  {
+    "query": "make this Rust library API Python-like without allocations or dyn dispatch",
+    "should_trigger": true
+  },
+  {
+    "query": "design a safe plugin ABI between separately compiled Rust dynamic libraries",
+    "should_trigger": true
+  },
+  {
+    "query": "we need a panic-safe MaybeUninit buffer initialization kernel",
+    "should_trigger": true
+  },
+  {
+    "query": "is std::simd production-ready for our stable 1.98 core?",
+    "should_trigger": true
+  },
+  {
+    "query": "what does the Rust borrow checker do?",
+    "should_trigger": false
+  },
+  {
+    "query": "show me a basic Rust for loop",
+    "should_trigger": false
+  },
+  {
+    "query": "translate this Python sentence into Arabic",
+    "should_trigger": false
+  },
+  {
+    "query": "create a Next.js dashboard",
+    "should_trigger": false
+  },
+  {
+    "query": "how do I install rustup on Windows?",
+    "should_trigger": false
+  },
+  {
+    "query": "write a simple guessing game in Rust for a beginner",
+    "should_trigger": false
+  },
+  {
+    "query": "explain what Option and Result mean",
+    "should_trigger": false
+  },
+  {
+    "query": "what is the latest stable Rust version?",
+    "should_trigger": false
+  },
+  {
+    "query": "fix the grammar in this README paragraph about Rust",
+    "should_trigger": false
+  },
+  {
+    "query": "convert this Cargo.toml snippet to JSON",
+    "should_trigger": false
+  }
+]

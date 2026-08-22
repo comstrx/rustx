@@ -52,16 +52,8 @@ criteria = "safe-to-run"
 version = "2.7.1"
 criteria = "safe-to-run"
 
-[[exemptions.itoa]]
-version = "1.0.17"
-criteria = "safe-to-run"
-
 [[exemptions.memchr]]
 version = "2.7.6"
-criteria = "safe-to-run"
-
-[[exemptions.quote]]
-version = "1.0.44"
 criteria = "safe-to-run"
 
 [[exemptions.regex]]
@@ -70,18 +62,6 @@ criteria = "safe-to-run"
 
 [[exemptions.regex-syntax]]
 version = "0.8.8"
-criteria = "safe-to-run"
-
-[[exemptions.serde_json]]
-version = "1.0.149"
-criteria = "safe-to-run"
-
-[[exemptions.syn]]
-version = "2.0.114"
-criteria = "safe-to-run"
-
-[[exemptions.unicode-ident]]
-version = "1.0.22"
 criteria = "safe-to-run"
 
 [[exemptions.walkdir]]

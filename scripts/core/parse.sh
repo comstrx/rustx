@@ -1240,8 +1240,12 @@ parse_args () {
 }
 parse () {
 
-    local __p_old_die="" __p_rc=0
+    local __p_old_die="" __p_rc=0 __p_out=0
     __p_old_die="$(declare -f die 2>/dev/null || true)"
+
+    # The return-line must reach the stream the caller sources even when die
+    # fires inside a nested $(...) — FD 1 there is the capture, not the caller.
+    exec {__p_out}>&1
 
     die () {
 
@@ -1249,14 +1253,18 @@ parse () {
         local code="${2:-2}"
 
         printf '❌ %s\n' "${msg}" >&2
-        printf 'return %s 2>/dev/null || exit %s\n' "${code}" "${code}"
+        printf 'return %s 2>/dev/null || exit %s\n' "${code}" "${code}" >&"${__p_out}"
 
-        exit 0
+        # Non-zero so set -e also aborts parse when die fires inside a nested
+        # $(...): the substitution's failure kills the outer parse process too.
+        exit "${code}"
 
     }
 
     parse_args --local "$@"
     __p_rc=$?
+
+    exec {__p_out}>&-
 
     if [[ -n "${__p_old_die}" ]]; then eval "${__p_old_die}"
     else unset -f die 2>/dev/null || true

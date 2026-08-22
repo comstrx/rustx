@@ -101,7 +101,7 @@ jobs:
           toolchain: ${{ steps.resolve.outputs.toolchain }}
           cache-key: ${{ inputs.cache-key || inputs.command }}
 
-      - uses: cargo-bins/cargo-binstall@main
+      - uses: cargo-bins/cargo-binstall@v1.21.1
 
       - name: Running bash ci
         env:

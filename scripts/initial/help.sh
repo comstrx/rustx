@@ -150,6 +150,10 @@ help_decode_token () {
 
     local raw="${tok#:}" rest=""
 
+    # Tokens scraped from parse schemas may carry their source quoting.
+    raw="${raw#\'}"; raw="${raw%\'}"
+    raw="${raw#\"}"; raw="${raw%\"}"
+
     _name="${raw%%[:=]*}"
     [[ -n "${_name}" ]] || return 1
 

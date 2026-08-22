@@ -6,10 +6,13 @@ CODECOV_PGP_FPR="${CODECOV_PGP_FPR:-27034E7FDB850E0BBC2C62FF806BB28AED779869}"
 perf_one_target () {
 
     local label="${1-}" bin="${2-}" test="${3-}" bench="${4-}" example="${5-}"
+    local target="" count=0
 
-    [[ -z "${bin}"   || -z "${example}" ]] || die "${label}: use only one of --bin or --example" 2
-    [[ -z "${bench}" || -z "${test}"    ]] || die "${label}: use only one of --bench or --test" 2
-    [[ -z "${bench}${example}"          ]] || die "${label}: use only one of --bench or --example" 2
+    for target in "${bin}" "${test}" "${bench}" "${example}"; do
+        [[ -n "${target}" ]] && count=$(( count + 1 ))
+    done
+
+    (( count <= 1 )) || die "${label}: use only one of --bin, --test, --bench or --example" 2
 
     return 0
 

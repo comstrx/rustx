@@ -9,12 +9,6 @@ trusted-publisher = "github:rust-lang/cc-rs"
 start = "2025-09-01"
 end = "2027-01-23"
 
-[[trusted.dtolnay]]
-criteria = "safe-to-deploy"
-user-id = 3618
-start = "2019-03-11"
-end = "2027-01-23"
-
 [[trusted.find-msvc-tools]]
 criteria = "safe-to-deploy"
 user-id = 539
@@ -32,6 +26,12 @@ criteria = "safe-to-deploy"
 user-id = 39279
 start = "2020-09-10"
 end = "2027-01-23"
+
+[[trusted.itoa]]
+criteria = "safe-to-deploy"
+user-id = 3618 # David Tolnay (dtolnay)
+start = "2019-05-02"
+end = "2027-08-22"
 
 [[trusted.jobserver]]
 criteria = "safe-to-deploy"
@@ -51,8 +51,32 @@ user-id = 696
 start = "2020-01-14"
 end = "2027-01-23"
 
+[[trusted.quote]]
+criteria = "safe-to-deploy"
+user-id = 3618 # David Tolnay (dtolnay)
+start = "2019-04-09"
+end = "2027-08-22"
+
 [[trusted.r-efi]]
 criteria = "safe-to-deploy"
 user-id = 12177
 start = "2019-03-01"
 end = "2027-01-23"
+
+[[trusted.serde_json]]
+criteria = "safe-to-deploy"
+user-id = 3618 # David Tolnay (dtolnay)
+start = "2019-02-28"
+end = "2027-08-22"
+
+[[trusted.syn]]
+criteria = "safe-to-deploy"
+user-id = 3618 # David Tolnay (dtolnay)
+start = "2019-03-01"
+end = "2027-08-22"
+
+[[trusted.unicode-ident]]
+criteria = "safe-to-deploy"
+user-id = 3618 # David Tolnay (dtolnay)
+start = "2021-10-02"
+end = "2027-08-22"

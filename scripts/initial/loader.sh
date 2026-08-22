@@ -49,7 +49,7 @@ load_walk () {
     shopt -q nullglob && nullglob_was_set=1
     shopt -s nullglob
 
-    local file="" base="" name="" subdir="" sd=""
+    local file="" base="" name="" subdir="" sd="" rc=0
     local -a extra_skip=()
 
     (( $# > 0 )) && extra_skip=( "$@" ) || extra_skip=()
@@ -99,15 +99,17 @@ load_walk () {
             source)
                 should_skip "${base}" "${extra_skip[@]-}" && continue
                 load_walk source "${sd}" "" "" "${extra_skip[@]-}" || {
+                    rc=$?
                     (( nullglob_was_set )) || shopt -u nullglob
-                    return $?
+                    return "${rc}"
                 }
             ;;
             doc)
                 should_skip "${base}" && continue
                 load_walk doc "${sd}" "${seen_ref}" "${mods_ref}" || {
+                    rc=$?
                     (( nullglob_was_set )) || shopt -u nullglob
-                    return $?
+                    return "${rc}"
                 }
             ;;
         esac
