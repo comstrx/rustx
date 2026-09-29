@@ -1,9 +1,9 @@
 name: Sanitizer
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 2 * * *'
+# on:
+#   workflow_dispatch:
+#   schedule:
+#     - cron: '0 2 * * *'
 
 concurrency:
   group: sanitizer-${{ github.workflow }}-${{ github.ref }}

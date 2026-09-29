@@ -1,19 +1,19 @@
 name: Fuzz
 
-on:
-  workflow_dispatch:
-    inputs:
-      duration:
-        description: Seconds of fuzzing per target.
-        required: false
-        type: string
-        default: '300'
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       duration:
+#         description: Seconds of fuzzing per target.
+#         required: false
+#         type: string
+#         default: '300'
 
-  # Enable the nightly schedule once `fuzz/` holds at least one target;
-  # until then it would fail every night on "No fuzz targets found".
-  #
-  # schedule:
-  #   - cron: '0 4 * * *'
+#   # Enable the nightly schedule once `fuzz/` holds at least one target;
+#   # until then it would fail every night on "No fuzz targets found".
+  
+#   schedule:
+#     - cron: '0 4 * * *'
 
 concurrency:
   group: fuzz-${{ github.workflow }}-${{ github.ref }}
