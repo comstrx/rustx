@@ -7,7 +7,7 @@
   <br/>
 </div>
 
-[![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](#license)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](#license)
 [![Rust 1.98+](https://img.shields.io/badge/rust-1.98%2B-orange.svg)](https://www.rust-lang.org)
 [![edition 2024](https://img.shields.io/badge/edition-2024-green.svg)](https://doc.rust-lang.org/edition-guide/)
 [![CI](https://github.com/comstrx/rustx/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/comstrx/rustx/actions/workflows/ci.yml)
@@ -67,10 +67,6 @@ The minimum supported Rust version is <code>1.98.0</code>.
 
 ## License
 
-<code>rustx</code> is dual-licensed under either
-[MIT](https://github.com/comstrx/rustx/blob/main/LICENSE-MIT) or
-[Apache-2.0](https://github.com/comstrx/rustx/blob/main/LICENSE-APACHE), at your option.
+Copyright © 2026 Abdulrahman Yasser (comstrx).
 
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in this work by you, as defined in the Apache-2.0 license, shall be
-dual-licensed as above, without any additional terms or conditions.
+Licensed under the [Apache License, Version 2.0](./LICENSE).
