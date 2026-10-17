@@ -138,11 +138,12 @@ pub struct Router {
     pub(crate) patterns: Vec<Box<str>>,
     pub(crate) tables:   Vec<Table>,
     pub(crate) layers:   Vec<Rc<dyn Middleware>>,
-    pub(crate) missing: Handler,
-    pub(crate) denied:  Handler,
-    pub(crate) limit:   usize,
-    pub(crate) worker:  u16,
-    pub(crate) serial:  Cell<u64>,
+    pub(crate) missing:  Handler,
+    pub(crate) denied:   Handler,
+    pub(crate) invalid:  Option<Box<str>>,
+    pub(crate) limit:    usize,
+    pub(crate) worker:   u16,
+    pub(crate) serial:   Cell<u64>,
 }
 
 /// What a server enforces on every connection.

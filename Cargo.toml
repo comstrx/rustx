@@ -21,7 +21,7 @@ members  = [
 ]
 
 [workspace.package]
-version      = "0.0.2"
+version      = "0.1.1"
 edition      = "2024"
 rust-version = "1.99"
 license      = "Apache-2.0"
@@ -30,19 +30,19 @@ readme       = "README.md"
 publish      = false
 
 [workspace.dependencies]
-log            = { path = "crates/log", package = "engine-log", version = "0.0.2" }
-error          = { path = "crates/error", package = "engine-error", version = "0.0.2" }
-memory         = { path = "crates/memory", package = "engine-memory", version = "0.0.2" }
-parse          = { path = "crates/parse", package = "engine-parse", version = "0.0.2" }
-validate       = { path = "crates/validate", package = "engine-validate", version = "0.0.2" }
-thread         = { path = "crates/thread", package = "engine-thread", version = "0.0.2" }
-rand           = { path = "crates/rand", package = "engine-rand", version = "0.0.2" }
-crypto         = { path = "crates/crypto", package = "engine-crypto", version = "0.0.2" }
-file           = { path = "crates/file", package = "engine-file", version = "0.0.2" }
-net            = { path = "crates/net", package = "engine-net", version = "0.0.2" }
-http           = { path = "crates/http", package = "engine-http", version = "0.0.2" }
-process        = { path = "crates/process", package = "engine-process", version = "0.0.2" }
-engine         = { path = "crates/engine", version = "0.0.2" }
+log            = { path = "crates/log", package = "engine-log", version = "0.1.1" }
+error          = { path = "crates/error", package = "engine-error", version = "0.1.1" }
+memory         = { path = "crates/memory", package = "engine-memory", version = "0.1.1" }
+parse          = { path = "crates/parse", package = "engine-parse", version = "0.1.1" }
+validate       = { path = "crates/validate", package = "engine-validate", version = "0.1.1" }
+thread         = { path = "crates/thread", package = "engine-thread", version = "0.1.1" }
+rand           = { path = "crates/rand", package = "engine-rand", version = "0.1.1" }
+crypto         = { path = "crates/crypto", package = "engine-crypto", version = "0.1.1" }
+file           = { path = "crates/file", package = "engine-file", version = "0.1.1" }
+net            = { path = "crates/net", package = "engine-net", version = "0.1.1" }
+http           = { path = "crates/http", package = "engine-http", version = "0.1.1" }
+process        = { path = "crates/process", package = "engine-process", version = "0.1.1" }
+engine         = { path = "crates/engine", version = "0.1.1" }
 criterion      = { version = "=0.8.2", default-features = false, features = ["cargo_bench_support"] }
 mimalloc       = { version = "=0.1.52", default-features = false }
 socket2        = { version = "=0.6.5", features = ["all"] }

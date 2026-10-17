@@ -19,7 +19,7 @@ impl Router {
     #[must_use]
     pub fn new () -> Self {
 
-        Self { routes: matchit::Router::new(), patterns: Vec::new(), tables: Vec::new(), layers: Vec::new(), missing: Self::boxed(Self::not_found), denied: Self::boxed(Self::not_allowed), limit: 1 << 20, worker: 0, serial: Cell::new(0) }
+        Self { routes: matchit::Router::new(), patterns: Vec::new(), tables: Vec::new(), layers: Vec::new(), missing: Self::boxed(Self::not_found), denied: Self::boxed(Self::not_allowed), invalid: None, limit: 1 << 20, worker: 0, serial: Cell::new(0) }
 
     }
 
@@ -128,6 +128,17 @@ impl Router {
 
     }
 
+    /// Whether every pattern given was valid and distinct; a server refuses to start on the first that was not.
+    ///
+    /// # Errors
+    /// `Config` keyed `bad_route`, naming the pattern and what is wrong with it.
+    #[inline]
+    pub fn check ( &self ) -> Result<()> {
+
+        self.invalid.as_deref().map_or(Ok(()), |reason| Err(Faults::BAD_ROUTE.because(reason.to_owned())))
+
+    }
+
     /// Routes one request through the middleware to its handler; a failure becomes its response.
     #[inline]
     pub async fn handle ( &self, request: Request ) -> Response {
@@ -190,7 +201,8 @@ impl Router {
 
         self.patterns.push(path.into());
         self.tables.push(Table::default());
-        self.routes.insert(path, index).unwrap_or_default();
+
+        if let Err(error) = self.routes.insert(path, index) { self.invalid.get_or_insert_with(|| format!("{path}: {error}").into()); }
 
         index
 

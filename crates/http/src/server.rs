@@ -206,6 +206,8 @@ impl Server {
     #[inline]
     pub async fn serve ( self, router: Router, stop: Stop, ready: impl FnOnce(&Address) ) -> Result<()> {
 
+        router.check()?;
+
         let source = Source::spread(&self.address, self.bind, 1)?.pop().ok_or_else(|| Failure::internal("no listener was made"))?;
 
         if let Some(local) = source.local() { ready(local); }
@@ -222,9 +224,11 @@ impl Worker {
     where F: Fn(u16) -> Router {
 
         let source = slots.lock().unwrap_or_else(PoisonError::into_inner).get_mut(index).and_then(Option::take).ok_or_else(|| Failure::internal("a worker found no listener"))?;
-        let router = Rc::new(build(u16::try_from(index).unwrap_or(u16::MAX)));
+        let router = build(u16::try_from(index).unwrap_or(u16::MAX));
 
-        Self { source, router, settings, stop, active: Rc::new(Cell::new(0)) }.serve().await
+        router.check()?;
+
+        Self { source, router: Rc::new(router), settings, stop, active: Rc::new(Cell::new(0)) }.serve().await
 
     }
 

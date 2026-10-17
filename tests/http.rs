@@ -337,6 +337,30 @@ mod tests {
 
     }
 
+    fn broken ( worker: u16 ) -> Router {
+
+        Router::new()
+            .worker(worker)
+            .get("/users/{id}", |_request| async { Ok(Response::text("one")) })
+            .get("/users/{name}", |_request| async { Ok(Response::text("two")) })
+
+    }
+
+    #[test]
+    fn a_router_with_a_conflicting_pattern_refuses_to_serve () {
+
+        let checked = broken(0).check().err();
+        let served  = Runtime::block_on(Server::bind(LOOPBACK).serve(broken(0), Stop::new(), |_local| {})).ok().and_then(Result::err);
+        let spread  = Server::bind(LOOPBACK).workers(2).run(broken, Stop::new(), |_local| {}).err();
+
+        assert_eq!(checked.as_ref().map(Failure::key), Some("bad_route"));
+        assert!(checked.is_some_and(|failure| failure.to_string().contains("/users/{name}")));
+        assert_eq!(served.map(|failure| failure.key()), Some("bad_route"));
+        assert_eq!(spread.map(|failure| failure.key()), Some("bad_route"));
+        assert_eq!(Router::new().get("/users/{id}", |_request| async { Ok(Response::text("one")) }).check().ok(), Some(()));
+
+    }
+
     async fn knock ( local: &Address, origin: &str ) -> Result<String> {
 
         let mut stream = Dial::connect(local, Duration::from_secs(5)).await?;

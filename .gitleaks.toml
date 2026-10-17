@@ -50,5 +50,5 @@ regexes = [
 description = "The lab Reverb key: a public app key bound to a loopback socket"
 condition = "AND"
 regexTarget = "line"
-paths = ['''(?:^|/)specs/[^/]+/config/contracts\.ts$''']
+paths = ['''(?:^|/)specs/(?:[^/]+/)+config/contracts\.ts$''']
 regexes = ['''realtime:\s*\{\s*url:\s*"ws://127\.0\.0\.1:\d+",\s*key:''']

@@ -40,6 +40,9 @@ impl Faults {
     /// A path no route matches.
     pub const NO_ROUTE: Fault = Fault::new("no_route", Code::NotFound, "no such route");
 
+    /// A route pattern that is malformed or conflicts with one registered before it.
+    pub const BAD_ROUTE: Fault = Fault::new("bad_route", Code::Config, "a route pattern is not valid");
+
     /// A request that did not finish within the server's deadline.
     pub const REQUEST_TIMEOUT: Fault = Fault::new("request_timeout", Code::Timeout, "the request took too long");
 
@@ -75,6 +78,7 @@ impl Faults {
         Self::ACCEPTOR_GONE,
         Self::METHOD_NOT_ALLOWED,
         Self::NO_ROUTE,
+        Self::BAD_ROUTE,
         Self::REQUEST_TIMEOUT,
         Self::NOT_WEBSOCKET,
         Self::CROSS_ORIGIN,
