@@ -1,0 +1,47 @@
+
+# cargo-vet config file
+
+[cargo-vet]
+version = "0.10"
+
+[imports.bytecode-alliance]
+url = "https://raw.githubusercontent.com/bytecodealliance/wasmtime/main/supply-chain/audits.toml"
+
+[imports.google]
+url = "https://raw.githubusercontent.com/google/supply-chain/main/audits.toml"
+
+[imports.isrg]
+url = "https://raw.githubusercontent.com/divviup/libprio-rs/main/supply-chain/audits.toml"
+
+[imports.mozilla]
+url = "https://raw.githubusercontent.com/mozilla/supply-chain/main/audits.toml"
+
+[imports.zcash]
+url = "https://raw.githubusercontent.com/zcash/rust-ecosystem/main/supply-chain/audits.toml"
+
+[policy.fuzz]
+criteria = "safe-to-run"
+
+[[exemptions.criterion]]
+version = "0.8.1"
+criteria = "safe-to-run"
+
+[[exemptions.half]]
+version = "2.7.1"
+criteria = "safe-to-run"
+
+[[exemptions.winapi-i686-pc-windows-gnu]]
+version = "0.4.0"
+criteria = "safe-to-run"
+
+[[exemptions.winapi-x86_64-pc-windows-gnu]]
+version = "0.4.0"
+criteria = "safe-to-run"
+
+[[exemptions.zerocopy]]
+version = "0.8.62"
+criteria = "safe-to-run"
+
+[[exemptions.zerocopy-derive]]
+version = "0.8.62"
+criteria = "safe-to-run"

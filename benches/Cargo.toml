@@ -1,0 +1,78 @@
+[package]
+name                   = "benches"
+publish.workspace      = true
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+description            = "Criterion benchmarks of the foundation crates."
+
+[dependencies]
+engine = { workspace = true, features = ["file", "net", "http", "process"] }
+
+[dev-dependencies]
+criterion.workspace = true
+
+[[bench]]
+name    = "log"
+path    = "log.rs"
+harness = false
+
+[[bench]]
+name    = "error"
+path    = "error.rs"
+harness = false
+
+[[bench]]
+name    = "memory"
+path    = "memory.rs"
+harness = false
+
+[[bench]]
+name    = "parse"
+path    = "parse.rs"
+harness = false
+
+[[bench]]
+name    = "validate"
+path    = "validate.rs"
+harness = false
+
+[[bench]]
+name    = "file"
+path    = "file.rs"
+harness = false
+
+[[bench]]
+name    = "net"
+path    = "net.rs"
+harness = false
+
+[[bench]]
+name    = "http"
+path    = "http.rs"
+harness = false
+
+[[bench]]
+name    = "process"
+path    = "process.rs"
+harness = false
+
+[lints]
+workspace = true
+
+[[bench]]
+name    = "thread"
+path    = "thread.rs"
+harness = false
+
+[[bench]]
+name    = "rand"
+path    = "rand.rs"
+harness = false
+
+[[bench]]
+name    = "crypto"
+path    = "crypto.rs"
+harness = false

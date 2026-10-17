@@ -1,0 +1,18 @@
+[package]
+name                   = "engine-validate"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "Input checks that collect every failed field into one keyed failure: required, lengths, ranges, email, ASCII, allowed sets, and any rule a caller states."
+categories             = ["rust-patterns"]
+keywords               = ["validate", "form", "rules"]
+
+[dependencies]
+error.workspace = true
+
+[lints]
+workspace = true

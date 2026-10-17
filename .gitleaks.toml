@@ -1,0 +1,54 @@
+title = "Gitleaks Configurations"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Ignore tool, build and dependency directories"
+paths = [
+    '''(^|/)\.git/''',
+    '''(^|/)\.claude/''',
+    '''(^|/)\.codex/''',
+    '''(^|/)\.agents/''',
+    '''(^|/)node_modules/''',
+    '''(^|/)vendor/''',
+    '''(^|/)target/''',
+    '''(^|/)dist/''',
+    '''(^|/)build/''',
+    '''(^|/)out/''',
+    '''(^|/)coverage/''',
+    '''(^|/)generated/''',
+    '''(^|/)Pods/''',
+    '''(^|/)\.fleet/''',
+    '''(^|/)\.zed/''',
+    '''(^|/)\.vs/''',
+    '''(^|/)\.vscode/''',
+    '''(^|/)\.idea/''',
+    '''(^|/)\.next/''',
+    '''(^|/)\.nuxt/''',
+    '''(^|/)\.expo/''',
+    '''(^|/)\.turbo/''',
+    '''(^|/)\.cache/''',
+    '''(^|/)\.vite/''',
+    '''(^|/)\.gradle/''',
+    '''(^|/)fuzz/corpus/''',
+    '''(^|/)fuzz/artifacts/''',
+    '''(?i)\.(?:zip|tar|tgz|gz|7z|rar|jar|war)$''',
+    '''(?i)\.(?:png|jpe?g|gif|webp|bmp|ico|pdf|exe|dll|so|dylib|bin|woff2?|ttf|eot)$''',
+]
+
+[[allowlists]]
+description = "Ignore obvious placeholders"
+regexTarget = "secret"
+regexes = [
+    '''(?i)\b(?:fake|dummy|example|sample|placeholder|redacted)\b''',
+    '''(?i)\b(?:xxxx+|yyyy+|zzzz+|0000+|1111+)\b''',
+    '''(?i)\b(?:your[-_ ]?(?:api[-_ ]?)?key|your[-_ ]?token|insert[-_ ]?here)\b''',
+]
+
+[[allowlists]]
+description = "The lab Reverb key: a public app key bound to a loopback socket"
+condition = "AND"
+regexTarget = "line"
+paths = ['''(?:^|/)specs/[^/]+/config/contracts\.ts$''']
+regexes = ['''realtime:\s*\{\s*url:\s*"ws://127\.0\.0\.1:\d+",\s*key:''']

@@ -1,0 +1,52 @@
+name: Bug report
+description: A reproducible defect
+
+title: '<scope>: <short description>'
+labels: [bug]
+
+body:
+  - type: input
+    id: scope
+    attributes:
+      label: Scope
+      placeholder: The module, package or area involved
+    validations:
+      required: true
+
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Exact steps and code, or a tiny public repository
+      render: shell
+    validations:
+      required: true
+
+  - type: input
+    id: revision
+    attributes:
+      label: Commit or tag
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: OS, architecture, and the toolchain version when relevant
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: The exact error or log, as text
+      render: text

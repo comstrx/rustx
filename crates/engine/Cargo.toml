@@ -1,0 +1,36 @@
+[package]
+name                   = "engine"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "The one door into the foundation: each capability as a module with its consumer surface named item by item, features for the heavy ones, and the contract of every code and declared failure."
+categories             = ["rust-patterns"]
+keywords               = ["engine", "foundation", "facade"]
+
+[dependencies]
+log.workspace      = true
+error.workspace    = true
+memory.workspace   = true
+parse.workspace    = true
+validate.workspace = true
+thread.workspace   = true
+rand.workspace     = true
+crypto.workspace   = true
+file               = { workspace = true, optional = true }
+net                = { workspace = true, optional = true }
+http               = { workspace = true, optional = true }
+process            = { workspace = true, optional = true }
+
+[features]
+file    = ["dep:file"]
+net     = ["dep:net"]
+http    = ["dep:http", "net"]
+process = ["dep:process"]
+alloc   = ["memory/alloc"]
+
+[lints]
+workspace = true

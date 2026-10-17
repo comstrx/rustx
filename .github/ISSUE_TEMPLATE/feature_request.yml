@@ -1,0 +1,34 @@
+name: Feature request
+description: A capability that does not exist yet
+
+title: '<scope>: <short description>'
+labels: [enhancement]
+
+body:
+  - type: input
+    id: scope
+    attributes:
+      label: Scope
+      placeholder: The module, package or area involved
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: The real problem this solves, not the solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

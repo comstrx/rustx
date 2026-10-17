@@ -1,0 +1,18 @@
+[package]
+name                   = "engine-error"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "The one failure every crate returns: a stable code with its HTTP status, exit code and level, a key, a detail, frames and a cause; reported or logged only on request."
+categories             = ["rust-patterns"]
+keywords               = ["error", "status", "exit-code", "result"]
+
+[dependencies]
+log.workspace = true
+
+[lints]
+workspace = true

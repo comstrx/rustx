@@ -1,0 +1,119 @@
+*                     text=auto eol=lf
+*.sh                  text eol=lf
+*.bash                text eol=lf
+*.zsh                 text eol=lf
+*.rs                  text eol=lf
+*.toml                text eol=lf
+*.yaml                text eol=lf
+*.yml                 text eol=lf
+*.json                text eol=lf
+*.md                  text eol=lf
+*.txt                 text eol=lf
+*.ini                 text eol=lf
+*.cfg                 text eol=lf
+*.conf                text eol=lf
+*.env                 text eol=lf
+*.mk                  text eol=lf
+*.js                  text eol=lf
+*.mjs                 text eol=lf
+*.cjs                 text eol=lf
+*.ts                  text eol=lf
+*.tsx                 text eol=lf
+*.jsx                 text eol=lf
+*.css                 text eol=lf
+*.scss                text eol=lf
+*.sass                text eol=lf
+*.html                text eol=lf
+*.svg                 text eol=lf
+*.ps1                 text eol=lf
+*.rb                  text eol=lf
+*.py                  text eol=lf
+*.go                  text eol=lf
+*.frag                text eol=lf
+*.vert                text eol=lf
+*.wgsl                text eol=lf
+*.lua                 text eol=lf
+*.sql                 text eol=lf
+*.proto               text eol=lf
+*.graphql             text eol=lf
+*.xml                 text eol=lf
+*.plist               text eol=lf
+*.pbxproj             text eol=lf
+*.xcconfig            text eol=lf
+*.storyboard          text eol=lf
+*.swift               text eol=lf
+*.m                   text eol=lf
+*.mm                  text eol=lf
+*.h                   text eol=lf
+*.kt                  text eol=lf
+*.kts                 text eol=lf
+*.java                text eol=lf
+*.gradle              text eol=lf
+*.properties          text eol=lf
+*.pro                 text eol=lf
+*.sln                 text eol=crlf
+*.bat                 text eol=crlf
+*.cmd                 text eol=crlf
+Cargo.lock            text eol=lf
+package-lock.json     text eol=lf
+bun.lock              text eol=lf
+yarn.lock             text eol=lf
+Dockerfile            text eol=lf
+Dockerfile.*          text eol=lf
+*.dockerfile          text eol=lf
+.dockerignore         text eol=lf
+.gitignore            text eol=lf
+.gitattributes        text eol=lf
+.editorconfig         text eol=lf
+Makefile              text eol=lf
+justfile              text eol=lf
+*.png                 binary
+*.jpg                 binary
+*.jpeg                binary
+*.gif                 binary
+*.webp                binary
+*.avif                binary
+*.glb                 binary
+*.ico                 binary
+*.pdf                 binary
+*.sqlite              binary
+*.ttf                 binary
+*.otf                 binary
+*.woff                binary
+*.woff2               binary
+*.zip                 binary
+*.tar                 binary
+*.gz                  binary
+*.tgz                 binary
+*.7z                  binary
+*.rar                 binary
+*.wasm                binary
+*.exe                 binary
+*.dll                 binary
+*.so                  binary
+*.dylib               binary
+*.a                   binary
+*.lib                 binary
+*.pdb                 binary
+*.mp3                 binary
+*.mp4                 binary
+*.mov                 binary
+*.mkv                 binary
+*.wav                 binary
+*.pem                 binary
+*.key                 binary
+*.p12                 binary
+*.pfx                 binary
+*.jks                 binary
+*.keystore            binary
+*.apk                 binary
+*.aab                 binary
+*.ipa                 binary
+*.lockb               binary
+*.min.js              -diff
+*.min.css             -diff
+*.map                 -diff
+*.isle                linguist-language=Lisp
+dist/**               linguist-generated=true
+build/**              linguist-generated=true
+generated/**          linguist-generated=true

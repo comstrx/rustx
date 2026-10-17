@@ -1,0 +1,16 @@
+[package]
+name                   = "xtask"
+publish.workspace      = true
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+description            = "The single gate runner for the workspace."
+
+[[bin]]
+name = "xtask"
+path = "src/main.rs"
+
+[lints]
+workspace = true

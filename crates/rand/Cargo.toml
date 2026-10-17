@@ -1,0 +1,19 @@
+[package]
+name                   = "engine-rand"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "Randomness from the operating system's secure source: unbiased numbers, reals, chances, strings, identifiers, picks, shuffles, dates and UUIDs of version 4 and 7."
+categories             = ["algorithms", "cryptography"]
+keywords               = ["random", "uuid", "csprng", "identifier", "shuffle"]
+
+[dependencies]
+error.workspace     = true
+getrandom.workspace = true
+
+[lints]
+workspace = true

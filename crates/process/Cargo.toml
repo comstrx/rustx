@@ -1,0 +1,24 @@
+[package]
+name                   = "engine-process"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "What a command-line tool stands on: arguments, environment, running other programs with a deadline, the machine it is on, its package manager, its service manager, and pid files, the same on Linux, macOS and Windows."
+categories             = ["command-line-interface", "os"]
+keywords               = ["cli", "process", "service", "systemd", "launchd"]
+
+[dependencies]
+log.workspace    = true
+error.workspace  = true
+memory.workspace = true
+parse.workspace  = true
+file.workspace   = true
+thread.workspace = true
+tokio            = { workspace = true, features = ["process", "io-util"] }
+
+[lints]
+workspace = true

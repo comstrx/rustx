@@ -1,0 +1,23 @@
+[package]
+name                   = "engine-memory"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "Bytes without surprises: stack and preallocated buffers that fail instead of growing, a pool that lends them, a zero-copy cursor, and byte lanes eight at a time."
+categories             = ["memory-management", "data-structures"]
+keywords               = ["buffer", "zero-copy", "zero-alloc", "pool", "simd"]
+
+[dependencies]
+error.workspace    = true
+bytes.workspace    = true
+mimalloc           = { workspace = true, optional = true }
+
+[features]
+alloc = ["dep:mimalloc"]
+
+[lints]
+workspace = true

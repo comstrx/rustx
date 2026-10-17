@@ -1,0 +1,103 @@
+[package]
+name                   = "fuzz"
+publish.workspace      = true
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+description            = "Fuzz targets of the foundation crates, one flat file per target."
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+engine                  = { workspace = true, features = ["file", "net", "http", "process"] }
+libfuzzer-sys.workspace = true
+
+[[bin]]
+name  = "log"
+path  = "log.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "error"
+path  = "error.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "memory"
+path  = "memory.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "parse"
+path  = "parse.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "validate"
+path  = "validate.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "file"
+path  = "file.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "net"
+path  = "net.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "http"
+path  = "http.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "process"
+path  = "process.rs"
+test  = false
+bench = false
+doc   = false
+
+[lints]
+workspace = true
+
+[[bin]]
+name  = "thread"
+path  = "thread.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "rand"
+path  = "rand.rs"
+test  = false
+bench = false
+doc   = false
+
+[[bin]]
+name  = "crypto"
+path  = "crypto.rs"
+test  = false
+bench = false
+doc   = false

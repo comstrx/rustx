@@ -1,0 +1,74 @@
+msrv = "1.99.0"
+
+avoid-breaking-exported-api = false
+
+doc-valid-idents = []
+
+too-many-arguments-threshold = 5
+too-many-lines-threshold = 80
+type-complexity-threshold = 100
+cognitive-complexity-threshold = 15
+excessive-nesting-threshold = 3
+max-trait-bounds = 2
+max-struct-bools = 2
+max-fn-params-bools = 1
+
+future-size-threshold = 8192
+pass-by-value-size-limit = 192
+stack-size-threshold = 262144
+array-size-threshold = 8192
+large-error-threshold = 64
+enum-variant-size-threshold = 160
+
+check-incompatible-msrv-in-tests = true
+
+allow-mixed-uninlined-format-args = false
+allow-renamed-params-for = []
+warn-unsafe-macro-metavars-in-private-macros = true
+
+warn-on-all-wildcard-imports = true
+
+allowed-scripts = ["Latin"]
+
+min-ident-chars-threshold = 2
+allowed-idents-below-min-chars = ["id", "ok", ".."]
+
+disallowed-names = ["tmp", ".."]
+
+disallowed-macros = [
+    { path = "std::print", reason = "no stdout in libs; use tracing/log", allow-invalid = true },
+    { path = "std::println", reason = "no stdout in libs; use tracing/log", allow-invalid = true },
+    { path = "std::eprint", reason = "no stderr in libs; use tracing/log", allow-invalid = true },
+    { path = "std::eprintln", reason = "no stderr in libs; use tracing/log", allow-invalid = true },
+
+    { path = "std::dbg", reason = "no dbg! in libs; use tracing + tests", allow-invalid = true },
+    { path = "core::panic", reason = "no panic! in libs; return structured errors", allow-invalid = true },
+    { path = "core::todo", reason = "no todo! in libs", allow-invalid = true },
+
+    { path = "core::unimplemented", reason = "no unimplemented! in libs", allow-invalid = true },
+    { path = "core::unreachable", reason = "avoid unreachable! in libs; prove invariants or handle error", allow-invalid = true },
+]
+
+disallowed-methods = [
+    { path = "core::option::Option::unwrap", reason = "no unwrap in libs; use ?/match/if let", allow-invalid = true },
+    { path = "core::result::Result::unwrap", reason = "no unwrap in libs; use ?/match", allow-invalid = true },
+    { path = "core::option::Option::expect", reason = "no expect in libs; return structured errors", allow-invalid = true },
+    { path = "core::result::Result::expect", reason = "no expect in libs; return structured errors", allow-invalid = true },
+
+    { path = "core::option::Option::unwrap_unchecked", reason = "ban unchecked unwrap; invariants must be explicit + audited", allow-invalid = true },
+    { path = "core::result::Result::unwrap_unchecked", reason = "ban unchecked unwrap; invariants must be explicit + audited", allow-invalid = true },
+
+    { path = "core::mem::transmute", reason = "ban transmute; prefer safe conversions or explicit unsafe with invariants", allow-invalid = true },
+    { path = "core::mem::transmute_copy", reason = "same hazard as transmute, without even a size check", allow-invalid = true },
+    { path = "core::mem::forget", reason = "leaking is a decision; use ManuallyDrop so the intent is in the type", allow-invalid = true },
+    { path = "std::process::exit", reason = "no process::exit in libraries", allow-invalid = true },
+
+    { path = "std::vec::Vec::leak", reason = "no leaking memory", allow-invalid = true },
+    { path = "std::boxed::Box::leak", reason = "no leaking memory", allow-invalid = true },
+]
+
+disallowed-types = [
+    { path = "std::cell::RefCell", reason = "runtime borrow checks panic; encode the invariant in the type instead", allow-invalid = true },
+
+    { path = "std::collections::LinkedList", reason = "cache-hostile; prefer Vec/VecDeque", allow-invalid = true },
+]

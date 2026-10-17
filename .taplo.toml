@@ -1,0 +1,49 @@
+include = ["**/*.toml"]
+
+exclude = [
+    "**/.git/**",
+    "**/.claude/**",
+    "**/.codex/**",
+    "**/.agents/**",
+    "**/node_modules/**",
+    "**/vendor/**",
+    "**/target/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/out/**",
+    "**/coverage/**",
+    "**/storage/**",
+    "**/generated/**",
+    "**/Pods/**",
+    "**/android/**",
+    "**/ios/**",
+    "**/.fleet/**",
+    "**/.zed/**",
+    "**/.vs/**",
+    "**/.vscode/**",
+    "**/.idea/**",
+    "**/.next/**",
+    "**/.nuxt/**",
+    "**/.expo/**",
+    "**/.turbo/**",
+    "**/.cache/**",
+    "**/.vite/**",
+    "**/.gradle/**",
+    "**/.infra/**",
+    "**/.terraform/**",
+    "**/fuzz/corpus/**",
+    "**/fuzz/artifacts/**",
+    "**/Cargo.toml",
+    "**/supply-chain/**",
+]
+
+[formatting]
+indent_string = "    "
+
+column_width = 100
+allowed_blank_lines = 1
+
+trailing_newline = true
+align_entries = false
+align_comments = false
+crlf = false

@@ -1,0 +1,30 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ['*']
+    labels: [deps]
+    commit-message:
+      prefix: 'global(deps)'
+
+  - package-ecosystem: cargo
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      rust:
+        patterns: ['*']
+    labels: [deps]
+    commit-message:
+      prefix: 'engine(deps)'

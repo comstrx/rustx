@@ -1,0 +1,31 @@
+rules:
+  forbidden-uses:
+    config:
+      allow:
+        - actions/attest
+        - actions/checkout
+        - actions/download-artifact
+        - actions/dependency-review-action
+        - actions/setup-node
+        - actions/upload-artifact
+        - actions-rust-lang/setup-rust-toolchain
+        - anchore/sbom-action/download-syft
+        - aquasecurity/setup-trivy
+        - cargo-bins/cargo-binstall
+        - actions/labeler
+        - crate-ci/typos
+        - crazy-max/ghaction-github-labeler
+        - gitleaks/gitleaks-action
+        - oven-sh/setup-bun
+        - zizmorcore/zizmor-action
+    remap:
+      severity: high
+  unpinned-uses:
+    config:
+      policies:
+        '*': hash-pin
+    remap:
+      severity: high
+  dangerous-triggers:
+    ignore:
+      - notify.yml

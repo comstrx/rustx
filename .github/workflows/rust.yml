@@ -1,0 +1,51 @@
+name: Rust
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+
+  workflow_dispatch:
+
+  workflow_call:
+
+concurrency:
+  group: ci-rust-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  gates:
+    name: gates
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - uses: actions-rust-lang/setup-rust-toolchain@ecabd13d1c56bd1345c230e542e9144811ad706f # v2.0.0
+
+      - uses: cargo-bins/cargo-binstall@3be4ad2b146f3302f92e5956c54fedbb6ae8cccc # v1.25.3
+
+      - name: Gates
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: cargo xtask gates

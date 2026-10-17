@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and design discussions
+    url: https://github.com/comstrx/rustx/discussions
+    about: Ask questions or propose designs here
+
+  - name: Security vulnerability (private)
+    url: https://github.com/comstrx/rustx/security/advisories/new
+    about: Never report security issues in public Issues

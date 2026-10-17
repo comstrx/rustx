@@ -1,0 +1,31 @@
+[package]
+name                   = "engine-http"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "HTTP on hyper, thread per core: a router of async handlers behind middleware, requests and responses as plain values, a client over the same transport, and WebSockets over an upgrade."
+categories             = ["web-programming::http-server", "web-programming::http-client", "asynchronous"]
+keywords               = ["http", "server", "client", "router", "websocket"]
+
+[dependencies]
+log.workspace            = true
+error.workspace          = true
+memory.workspace         = true
+parse.workspace          = true
+net.workspace            = true
+thread.workspace         = true
+crypto.workspace         = true
+tokio                    = { workspace = true, features = ["rt", "time", "sync", "io-util"] }
+hyper.workspace          = true
+bytes.workspace          = true
+hyper-util.workspace     = true
+http-body.workspace      = true
+http-body-util.workspace = true
+matchit.workspace        = true
+
+[lints]
+workspace = true

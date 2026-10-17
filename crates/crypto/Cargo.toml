@@ -1,0 +1,20 @@
+[package]
+name                   = "engine-crypto"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "Digests and encodings without dependencies, unguessable tokens with their fingerprints, and secrets compared in constant time."
+categories             = ["cryptography", "encoding"]
+keywords               = ["sha1", "base64", "token", "constant-time", "secret"]
+
+[dependencies]
+error.workspace  = true
+memory.workspace = true
+rand.workspace   = true
+
+[lints]
+workspace = true

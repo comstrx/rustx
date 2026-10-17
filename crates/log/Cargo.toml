@@ -1,0 +1,15 @@
+[package]
+name                   = "engine-log"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "Structured events and audit records as values: rendered as text or JSON, written only to the sinks a program chose."
+categories             = ["development-tools::debugging"]
+keywords               = ["log", "audit", "structured", "json"]
+
+[lints]
+workspace = true

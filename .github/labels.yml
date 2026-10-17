@@ -1,0 +1,27 @@
+- name: global
+  color: 'BFDADC'
+  description: Root governance, shared by every part
+
+- name: ci
+  color: 'FBCA04'
+  description: Workflows and automation
+
+- name: deps
+  color: 'E4E669'
+  description: Dependencies, manifests and lockfiles
+
+- name: docs
+  color: 'D4C5F9'
+  description: Documentation only
+
+- name: security
+  color: 'B60205'
+  description: Security policy, scanning and supply chain
+
+- name: bug
+  color: 'D73A4A'
+  description: Something is not working
+
+- name: enhancement
+  color: 'A2EEEF'
+  description: A capability that does not exist yet

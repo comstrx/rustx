@@ -1,0 +1,19 @@
+[package]
+name                   = "engine-thread"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "Concurrency on one thread per core: a runtime per worker, tasks on its local set or on the blocking pool, deadlines, and a stop signal every task can wait on."
+categories             = ["asynchronous", "concurrency"]
+keywords               = ["runtime", "task", "thread", "async", "deadline"]
+
+[dependencies]
+error.workspace = true
+tokio           = { workspace = true, features = ["rt", "time", "sync", "signal"] }
+
+[lints]
+workspace = true

@@ -1,0 +1,67 @@
+[package]
+name                   = "tests"
+publish.workspace      = true
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+authors.workspace      = true
+license.workspace      = true
+description            = "Public-API contract tests for the foundation crates, linked the way a consumer links."
+
+[dependencies]
+engine = { workspace = true, features = ["file", "net", "http", "process"] }
+
+[[test]]
+name = "engine"
+path = "engine.rs"
+
+[[test]]
+name = "log"
+path = "log.rs"
+
+[[test]]
+name = "error"
+path = "error.rs"
+
+[[test]]
+name = "memory"
+path = "memory.rs"
+
+[[test]]
+name = "parse"
+path = "parse.rs"
+
+[[test]]
+name = "validate"
+path = "validate.rs"
+
+[[test]]
+name = "thread"
+path = "thread.rs"
+
+[[test]]
+name = "rand"
+path = "rand.rs"
+
+[[test]]
+name = "crypto"
+path = "crypto.rs"
+
+[[test]]
+name = "file"
+path = "file.rs"
+
+[[test]]
+name = "net"
+path = "net.rs"
+
+[[test]]
+name = "http"
+path = "http.rs"
+
+[[test]]
+name = "process"
+path = "process.rs"
+
+[lints]
+workspace = true

@@ -1,0 +1,18 @@
+[package]
+name                   = "engine-parse"
+version.workspace      = true
+edition.workspace      = true
+rust-version.workspace = true
+license.workspace      = true
+authors.workspace      = true
+readme.workspace       = true
+publish.workspace      = true
+description            = "Text into values without surprises: integers, reals, flags, sizes, durations, percent-encoding, query strings, key=value lines and comma lists, each failure keyed."
+categories             = ["parsing", "no-std"]
+keywords               = ["parse", "query", "percent", "duration"]
+
+[dependencies]
+error.workspace = true
+
+[lints]
+workspace = true
